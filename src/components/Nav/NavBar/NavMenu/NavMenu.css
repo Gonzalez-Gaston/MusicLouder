@@ -1,0 +1,22 @@
+.nav-items{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.item-link{
+    width: auto;
+    padding: 0 10px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-link:hover{
+    height: 80px;
+    cursor: pointer;
+    background-color: #222121;
+}

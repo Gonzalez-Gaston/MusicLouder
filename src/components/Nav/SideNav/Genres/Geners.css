@@ -1,0 +1,21 @@
+.container-genres {
+    width: 100%; /* Ajustar según el contenedor padre */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.item-genre {
+    border: 2px solid #ffcc00;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.item-genre:hover {
+    cursor: pointer;
+    background-color: rgb(47, 50, 50);
+}

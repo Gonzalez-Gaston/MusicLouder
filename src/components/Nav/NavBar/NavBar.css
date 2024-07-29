@@ -1,0 +1,12 @@
+.nav-bar{
+    background-color: #0D0908;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-bar img{
+    height: 80px;
+    width: 80px;
+}
