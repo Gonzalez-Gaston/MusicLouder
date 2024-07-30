@@ -1,6 +1,6 @@
 .side-nav{
     background-color: #0D0908;
-    height: calc( 100vh - 160px);
+    height: calc( 100vh - 80px);
     overflow-y: auto;
     width: 280px;
     margin: 0;

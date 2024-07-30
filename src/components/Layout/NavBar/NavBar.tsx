@@ -12,6 +12,13 @@ export function NavBar() {
                 { text: "About", url: "/about" },
                 { text: "Contact", url: "/contact" },
             ]} />
+            <div className="container-input">
+                <input type="text" className="input-search" placeholder="Busqueda"/>
+            </div>
+            <div className="container-user">
+                <img src="../public/user.png" alt="" className="user-icon"/>
+                <img src="../public/flecha.png" alt="" className="flecha-icon"/>
+            </div>
         </header>
     )
 }

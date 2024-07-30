@@ -1,0 +1,16 @@
+.layout{
+    color: white;
+}
+
+.container{
+    width: 100%;
+    height: calc( 100vh - 80px);
+    background-color: rgb(212, 225, 74);
+    display: flex;
+    flex-direction: row;
+}
+
+.container-outlet{
+    width: calc( 100% - 280px);
+    background-color: rgb(212, 225, 74);
+}
