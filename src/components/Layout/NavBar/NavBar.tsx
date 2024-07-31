@@ -9,8 +9,7 @@ export function NavBar() {
             </div>
             <NavMenu navItems={[
                 { text: "Home", url: "/" },
-                { text: "About", url: "/about" },
-                { text: "Contact", url: "/contact" },
+                { text: "PlayList", url: "/playlist" },
             ]} />
             <div className="container-input">
                 <input type="text" className="input-search" placeholder="Busqueda"/>

@@ -6,6 +6,8 @@ import { NotFound } from "../components/NotFound/NotFound";
 import { Login } from "../components/Login/Login";
 import { Register } from "../components/Register/Register";
 import { Songs } from "../components/Songs/Songs";
+import { Albums } from "../components/Albums/Albums";
+import { Artists } from "../components/Artists/Artists";
 
 export const Router = createBrowserRouter(
     [
@@ -50,13 +52,13 @@ export const Router = createBrowserRouter(
                 {
                     path: "/albums",
                     element: (
-                        <Songs />
+                        <Albums />
                     ),
                 },
                 {
-                    path: "/artist",
+                    path: "/artists",
                     element: (
-                        <Songs />
+                        <Artists />
                     ),
                 },
                 {
@@ -76,10 +78,6 @@ export const Router = createBrowserRouter(
                     element: (
                         <Songs />
                     ),
-                },
-                {
-                    path: "*",
-                    element: <NotFound />,
                 },
             ],
         },

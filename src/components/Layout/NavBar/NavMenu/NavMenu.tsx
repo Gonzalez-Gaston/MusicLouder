@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./NavMenu.css";
 
 export function NavMenu({ navItems= [] }: { navItems?: { text: string; url: string }[] }) {
@@ -6,13 +7,13 @@ export function NavMenu({ navItems= [] }: { navItems?: { text: string; url: stri
     return (
         <div className="nav-items">
                 {navItems.map((item, index) => (
-                    <a // cambiar los anchor por Link
+                    <Link
                         key={index}
-                        className="item-link"
-                        itemRef={item.url}
+                        className="item-link-nav"
+                        to={item.url}
                     >
                         {item.text}
-                    </a>
+                    </Link>
                 ))}
         </div>
     );

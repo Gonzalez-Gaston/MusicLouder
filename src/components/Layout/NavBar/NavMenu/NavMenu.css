@@ -6,16 +6,18 @@
     align-items: center;
 }
 
-.item-link{
+.item-link-nav{
     width: auto;
     padding: 0 10px;
-    height: 80px;
+    height: 80px !important;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    color: inherit;
 }
 
-.item-link:hover{
+.item-link-nav:hover{
     height: 80px;
     cursor: pointer;
     background-color: #222121;
