@@ -1,7 +1,7 @@
 export function NotFound() {
     return (
         <div>
-            Not Found
+            Not Found Gil
         </div>
     );
 }

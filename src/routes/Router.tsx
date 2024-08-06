@@ -42,7 +42,7 @@ export const Router = createBrowserRouter(
                     ),
                     // children: [
                     //     {
-                    //         path: ":genero",
+                    //         path: ":id",
                     //         element: (
                     //             <Songs />
                     //         ),
@@ -59,24 +59,6 @@ export const Router = createBrowserRouter(
                     path: "/artists",
                     element: (
                         <Artists />
-                    ),
-                },
-                {
-                    path: "/songs",
-                    element: (
-                        <Songs />
-                    ),
-                },
-                {
-                    path: "/songs",
-                    element: (
-                        <Songs />
-                    ),
-                },
-                {
-                    path: "/songs",
-                    element: (
-                        <Songs />
                     ),
                 },
             ],
