@@ -1,7 +1,9 @@
-export function Songs(){
-    return(
+import { CardSong } from "./CardSong/CardSong";
+
+export function Songs() {
+    return (
         <div>
-            <h1>SONGS</h1>
+            <CardSong />
         </div>
     );
 }

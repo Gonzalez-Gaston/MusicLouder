@@ -1,0 +1,45 @@
+.CardSong {
+    background-color: black;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    margin: 20px;
+    transition: transform 0.3s;
+  }
+  
+  .CardSong:hover {
+    transform: scale(1.05);
+  }
+  
+  .CardSong-image {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  
+  .CardSong-info {
+    text-align: center;
+    margin-top: 6px;
+  }
+  
+  .CardSong-title {
+    font-size: 1em;
+    margin: 3px 0;
+  }
+  
+  .CardSong-artist {
+    font-size: 0.85em;
+    margin: 2px 0;
+  }
+  
+  .CardSong-album {
+    font-size: 0.75em;
+    margin: 2px 0;
+    color: #ccc;
+  }
+  
