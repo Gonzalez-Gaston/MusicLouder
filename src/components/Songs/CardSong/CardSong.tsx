@@ -10,7 +10,7 @@ interface CardSongProps {
 
 export function CardSong({ title, artist, album, image, onClick }: CardSongProps) {
     return (
-        <div className="CardSong" onClick={onClick}> {/* Agregar el manejador de clic */}
+        <div className="CardSong" onClick={onClick}> {}
             <img src={image} alt={`Album cover for ${title}`} className="CardSong-image" />
             <div className="CardSong-info">
                 <h2 className="CardSong-title">{title}</h2>

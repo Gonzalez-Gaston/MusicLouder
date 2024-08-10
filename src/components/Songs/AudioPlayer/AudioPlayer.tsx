@@ -1,4 +1,5 @@
 import React from 'react';
+import './AudioPlayer.css';
 
 interface AudioPlayerProps {
     src: string;
