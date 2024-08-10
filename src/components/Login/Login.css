@@ -19,9 +19,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1920px; /* Ancho del video en 1080p */
-  height: 1080px; /* Alto del video en 1080p */
-  transform: translate(-50%, -50%) scale(1.2); /* Ajusta el valor de scale según sea necesario */
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%) scale(1.2);
   pointer-events: none;
 }
 
@@ -46,14 +46,25 @@
 .login-form form {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .login-form label {
   margin-bottom: 5px;
+  width: 70%;
+  text-align: left;
 }
 
-.login-form input {
-  margin-bottom: 10px;
+.login-form .form-input {
+  width: 70%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -66,6 +77,7 @@
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  width: 70%;
 }
 
 .login-form button:hover {

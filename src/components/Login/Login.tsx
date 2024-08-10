@@ -24,7 +24,6 @@ export const Login: React.FC = () => {
       }
 
       const data = await response.json();
-
       console.log("Logueo Existoso", data);
     } catch (error) {
       setError(
@@ -47,21 +46,23 @@ export const Login: React.FC = () => {
       <div className="login-form">
         <h2>Inicia sesión</h2>
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="form-group">
             <label>Usuario:</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              className="form-input"
               required
             />
           </div>
-          <div>
+          <div className="form-group">
             <label>Contraseña:</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="form-input"
               required
             />
           </div>
