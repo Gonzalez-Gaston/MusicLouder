@@ -1,4 +1,4 @@
-.CardSong {
+.card-song {
   background-color: black;
   color: white;
   padding: 8px;
@@ -12,32 +12,32 @@
   transition: transform 0.3s;
 }
 
-.CardSong:hover {
+.card-song:hover {
   transform: scale(1.05);
 }
 
-.CardSong-image {
+.card-song-image {
   width: 100%;
   height: auto;
   border-radius: 6px;
 }
 
-.CardSong-info {
+.card-song-info {
   text-align: center;
   margin-top: 6px;
 }
 
-.CardSong-title {
+.card-song-title {
   font-size: 1em;
   margin: 3px 0;
 }
 
-.CardSong-artist {
+.card-song-artist {
   font-size: 0.85em;
   margin: 2px 0;
 }
 
-.CardSong-album {
+.card-song-album {
   font-size: 0.75em;
   margin: 2px 0;
   color: #ccc;

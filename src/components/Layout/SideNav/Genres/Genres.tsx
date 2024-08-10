@@ -14,7 +14,7 @@ export interface Genre {
 
 export function Genres(){
     const [page] = useState(1);
-    const [pageSize] = useState(20);
+    const [pageSize] = useState(50);
 
     const [{ data, isError, isLoading }, doFetch] = useFetch(
         "https://sandbox.academiadevelopers.com/harmonyhub/genres/",
