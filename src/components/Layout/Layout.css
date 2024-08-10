@@ -12,5 +12,8 @@
 
 .container-outlet{
     width: calc( 100% - 280px);
-    background-color: rgb(212, 225, 74);
+    background-color: #ffd700;
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
 }
