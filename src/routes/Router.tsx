@@ -10,6 +10,7 @@ import { Albums } from "../components/Albums/Albums";
 import { Artists } from "../components/Artists/Artists";
 import { SongForm } from "../components/Songs/SongForm/Songform";
 import { ArtistForm } from "../components/Artists/ArtistForm/ArtistForm";
+import { AlbumForm } from "../components/Albums/AlbumForm/AlbumForm";
 
 export const Router = createBrowserRouter(
   [
@@ -44,6 +45,10 @@ export const Router = createBrowserRouter(
           path: "/albums",
           element: <Albums />,
         },
+        {
+            path: "/albums/create",
+            element: <AlbumForm />,
+          },
         {
           path: "/artists",
           element: <Artists />,
