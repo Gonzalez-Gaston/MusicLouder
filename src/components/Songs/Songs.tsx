@@ -12,6 +12,8 @@ interface Song {
 
 export function Songs() {
     const [songs, setSongs] = useState<Song[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const songsPerPage = 8;
 
     useEffect(() => {
         fetchSongs();
@@ -22,7 +24,6 @@ export function Songs() {
             const response = await fetch('https://sandbox.academiadevelopers.com/harmonyhub/songs?page_size=181');
             const data = await response.json();
 
-            
             if (data && data.results) {
                 setSongs(data.results); 
             } else {
@@ -33,9 +34,27 @@ export function Songs() {
         }
     };
 
+    const indexOfLastSong = currentPage * songsPerPage;
+    const indexOfFirstSong = indexOfLastSong - songsPerPage;
+    const currentSongs = songs.slice(indexOfFirstSong, indexOfLastSong);
+
+    const totalPages = Math.ceil(songs.length / songsPerPage);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
     return (
         <div className="songs-container">
-            {songs.map((song, index) => (
+            {currentSongs.map((song, index) => (
                 <CardSong
                     key={index}
                     title={song.title}
@@ -44,6 +63,15 @@ export function Songs() {
                     image={song.cover}
                 />
             ))}
+            <div className="pagination">
+                <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                    Anterior
+                </button>
+                <span>Página {currentPage} de {totalPages}</span>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    Siguiente
+                </button>
+            </div>
         </div>
     );
 }
