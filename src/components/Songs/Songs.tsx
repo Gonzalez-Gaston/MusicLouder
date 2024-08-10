@@ -59,7 +59,14 @@ export function Songs() {
   return (
     <div className="songs-container">
       <button className="button-card" onClick={handleAddSongClick}>
-        Agregar Canción
+        <img
+          src="../public/addIcon3.svg"
+          alt="Agregar"
+          className="button-icon"
+        />
+        <div className="CardSong-info">
+          <h2 className="CardSong-title">Agregar Canción</h2>
+        </div>
       </button>{" "}
       {data.results.map((item: Song) => (
         <CardSong

@@ -1,84 +1,85 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 .app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .main-content {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-    padding: 20px;
-    box-sizing: border-box;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .songs-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-    padding: 20px;
-    box-sizing: border-box;
-    max-height: calc(100vh - 120px); 
-    overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 
 .pagination {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    overflow-y: auto;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
 }
 .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-/* Songs.css */
-.CardSong {
+.CardSong,
+.button-card {
   background-color: black;
   color: white;
   padding: 8px;
@@ -86,20 +87,23 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 150px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
   margin: 20px;
   transition: transform 0.3s;
 }
 
-.CardSong:hover {
+.CardSong:hover,
+.button-card:hover {
   transform: scale(1.05);
 }
 
-.CardSong-image {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
+.CardSong-image,
+.button-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 8px;
 }
 
 .CardSong-info {
@@ -124,23 +128,5 @@ body, html {
 }
 
 .button-card {
-  background-color: black;
-  color: white;
-  padding: 8px;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 150px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-  margin: 20px;
-  transition: transform 0.3s;
   cursor: pointer;
 }
-
-.button-card:hover {
-  transform: scale(1.05);
-}
-
-
-
