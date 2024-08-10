@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFetch } from '../../hooks/useFetch';
 import './Home.css';
 
 interface CardProps {
@@ -8,20 +9,20 @@ interface CardProps {
   link?: string;
 }
 
-const news = [
-  { id: 1, title: 'Nuevos lanzamientos musicales de esta semana', content: '¡Consulta los lanzamientos más recientes de tus artistas favoritos!' },
-  { id: 2, title: 'Tendencias musicales en 2024', content: 'Explora los géneros y artistas más populares del año.' },
-];
+interface Song {
+  id: number;
+  name: string;
+  artist: string;
+  image: string;
+}
 
-const songs = [
-  { id: 1, name: 'Canción Uno', artist: 'Artista Uno', image: 'https://via.placeholder.com/150' },
-  { id: 2, name: 'Canción Dos', artist: 'Artista Dos', image: 'https://via.placeholder.com/150' },
-];
-
-const artists = [
-  { id: 1, name: 'Artista Uno', bio: 'Biografía del Artista Uno', website: 'https://artistone.com', image: 'https://via.placeholder.com/150' },
-  { id: 2, name: 'Artista Dos', bio: 'Biografía del Artista Dos', website: 'https://artisttwo.com', image: 'https://via.placeholder.com/150' },
-];
+interface Artist {
+  id: number;
+  name: string;
+  bio: string;
+  website: string;
+  image: string;
+}
 
 const Card: React.FC<CardProps> = ({ title, content, image, link }) => (
   <div className="card">
@@ -35,6 +36,36 @@ const Card: React.FC<CardProps> = ({ title, content, image, link }) => (
 );
 
 const Home: React.FC = () => {
+  const [topSongs, setTopSongs] = useState<Song[]>([]);
+  const [topArtists, setTopArtists] = useState<Artist[]>([]);
+
+  const [{ data: songsData, isError: isSongsError, isLoading: isSongsLoading }, fetchSongs] = useFetch(
+    'https://sandbox.academiadevelopers.com/harmonyhub/songs/',
+    {}
+  );
+
+  const [{ data: artistsData, isError: isArtistsError, isLoading: isArtistsLoading }, fetchArtists] = useFetch(
+    'https://sandbox.academiadevelopers.com/harmonyhub/artists/',
+    {}
+  );
+
+  useEffect(() => {
+    fetchSongs();
+    fetchArtists();
+  }, [fetchSongs, fetchArtists]);
+
+  useEffect(() => {
+    if (songsData?.results) {
+      setTopSongs(songsData.results.slice(0, 4));
+    }
+  }, [songsData]);
+
+  useEffect(() => {
+    if (artistsData?.results) {
+      setTopArtists(artistsData.results.slice(0, 4));
+    }
+  }, [artistsData]);
+
   return (
     <div className="home">
       <header className="header">
@@ -45,17 +76,29 @@ const Home: React.FC = () => {
       <section className="section news">
         <h2>Noticias musicales y nuevos lanzamientos</h2>
         <div className="card-container">
-          {news.map(item => (
-            <Card key={item.id} title={item.title} content={item.content} />
-          ))}
+          <Card
+            title="Nuevos lanzamientos musicales de esta semana"
+            content="¡Consulta los lanzamientos más recientes de tus artistas favoritos!"
+          />
+          <Card
+            title="Tendencias musicales en 2024"
+            content="Explora los géneros y artistas más populares del año."
+          />
         </div>
       </section>
 
       <section className="section songs">
         <h2>Top Canciones</h2>
         <div className="card-container">
-          {songs.map(song => (
-            <Card key={song.id} title={song.name} content={`Artista: ${song.artist}`} image={song.image} />
+          {isSongsLoading && <p>Cargando canciones...</p>}
+          {isSongsError && <p>Error al cargar las canciones.</p>}
+          {topSongs.map((song: Song) => (
+            <Card
+              key={song.id}
+              title={song.name}
+              content={`Artista: ${song.artist}`}
+              image={song.image}
+            />
           ))}
         </div>
       </section>
@@ -63,7 +106,9 @@ const Home: React.FC = () => {
       <section className="section artists">
         <h2>Artistas Destacados</h2>
         <div className="card-container">
-          {artists.map(artist => (
+          {isArtistsLoading && <p>Cargando artistas...</p>}
+          {isArtistsError && <p>Error al cargar los artistas.</p>}
+          {topArtists.map((artist: Artist) => (
             <Card
               key={artist.id}
               title={artist.name}
@@ -74,8 +119,6 @@ const Home: React.FC = () => {
           ))}
         </div>
       </section>
-
-      
     </div>
   );
 };
