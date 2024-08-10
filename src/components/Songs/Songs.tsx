@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CardSong } from './CardSong/CardSong';
+import { AudioPlayer } from './AudioPlayer/AudioPlayer';
 import './CardSong/CardSong.css';
 import './Songs.css';
 
@@ -8,11 +9,13 @@ interface Song {
     artist: string;
     album: string;
     cover: string;
+    song_file: string;
 }
 
 export function Songs() {
     const [songs, setSongs] = useState<Song[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [currentSong, setCurrentSong] = useState<Song | null>(null);
     const songsPerPage = 8;
 
     useEffect(() => {
@@ -52,6 +55,14 @@ export function Songs() {
         }
     };
 
+    const handleCardClick = (song: Song) => {
+        setCurrentSong(song);
+    };
+
+    const handleAudioEnded = () => {
+        setCurrentSong(null);
+    };
+
     return (
         <div className="songs-container">
             {currentSongs.map((song, index) => (
@@ -61,8 +72,16 @@ export function Songs() {
                     artist={song.artist}
                     album={song.album}
                     image={song.cover}
+                    onClick={() => handleCardClick(song)}
                 />
             ))}
+            {currentSong && (
+                <AudioPlayer
+                    src={currentSong.song_file} // Usando song_file para el audio
+                    isPlaying={true}
+                    onEnded={handleAudioEnded}
+                />
+            )}
             <div className="pagination">
                 <button onClick={handlePreviousPage} disabled={currentPage === 1}>
                     Anterior
