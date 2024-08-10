@@ -1,59 +1,39 @@
 import { useState, useEffect } from 'react';
 import { CardSong } from './CardSong/CardSong';
 import { AudioPlayer } from './AudioPlayer/AudioPlayer';
-import './CardSong/CardSong.css';
+import { useFetch } from '../../hooks/useFetch';
 import './Songs.css';
 
-interface Song {
+export interface Song {
+    id: number;
     title: string;
-    artist: string;
-    album: string;
+    artist: number[];
+    genres: number[];
+    duration: number;
+    owner: number;
+    view_count: number;
+    album: number;
     cover: string;
     song_file: string;
+    created_at: Date;
+    updated_at: Date;
+    year: number;
 }
 
 export function Songs() {
-    const [songs, setSongs] = useState<Song[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(9);
     const [currentSong, setCurrentSong] = useState<Song | null>(null);
-    const songsPerPage = 8;
+
+
+    const [{ data, isError, isLoading }, doFetch] = useFetch(
+        "https://sandbox.academiadevelopers.com/harmonyhub/songs/",
+        {}
+    );
 
     useEffect(() => {
-        fetchSongs();
-    }, []);
-
-    const fetchSongs = async () => {
-        try {
-            const response = await fetch('https://sandbox.academiadevelopers.com/harmonyhub/songs?page_size=181');
-            const data = await response.json();
-
-            if (data && data.results) {
-                setSongs(data.results); 
-            } else {
-                console.error('Estructura de datos no esperada:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching songs:', error);
-        }
-    };
-
-    const indexOfLastSong = currentPage * songsPerPage;
-    const indexOfFirstSong = indexOfLastSong - songsPerPage;
-    const currentSongs = songs.slice(indexOfFirstSong, indexOfLastSong);
-
-    const totalPages = Math.ceil(songs.length / songsPerPage);
-
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
+        doFetch({ page, page_size: pageSize }); 
+    }, [page, pageSize]); 
 
     const handleCardClick = (song: Song) => {
         setCurrentSong(song);
@@ -63,18 +43,23 @@ export function Songs() {
         setCurrentSong(null);
     };
 
+    if (isLoading) return <p>Cargando...</p>;
+    if (isError) return <p>Error al cargar las canciones.</p>;
+    if (!data || !data.results) return <p>No hay canciones disponibles</p>;
+
     return (
         <div className="songs-container">
-            {currentSongs.map((song, index) => (
+            {data.results.map((item: Song) => (
                 <CardSong
-                    key={index}
-                    title={song.title}
-                    artist={song.artist}
-                    album={song.album}
-                    image={song.cover}
-                    onClick={() => handleCardClick(song)}
+                    key={item.id}
+                    onClick={() => handleCardClick(item)}
+                    {...item}
                 />
             ))}
+            <div className="pagination-controls">
+                <button onClick={() => setPage(prevPage => Math.max(prevPage - 1, 1))}>Anterior</button>
+                <button onClick={() => setPage(prevPage => (data.next ? prevPage + 1 : prevPage))}>Siguiente</button>
+            </div>
             {currentSong && (
                 <AudioPlayer
                     src={currentSong.song_file} // Usando song_file para el audio
@@ -82,15 +67,8 @@ export function Songs() {
                     onEnded={handleAudioEnded}
                 />
             )}
-            <div className="pagination">
-                <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                    Anterior
-                </button>
-                <span>Página {currentPage} de {totalPages}</span>
-                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Siguiente
-                </button>
-            </div>
         </div>
     );
+
 }
+

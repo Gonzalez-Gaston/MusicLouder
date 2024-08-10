@@ -35,15 +35,19 @@ export function useFetch(url: string, options = {}) {
         isLoading: true,
     });
 
-    function doFetch(newOptions: any) {
+    function doFetch(queryParams: Record<string, any> = {}) {
         dispatch({ type: ACTIONS.FETCH_INIT });
 
-        fetch(url, { ...options, ...newOptions })
+        // Construir la URL con los parámetros de consulta
+        const queryString = new URLSearchParams(queryParams).toString();
+        const fullUrl = queryString ? `${url}?${queryString}` : url;
+
+        fetch(fullUrl, { ...options })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
                 }
-                throw Error("Error al relizar la petición");
+                throw new Error("Error al realizar la petición");
             })
             .then((data) => {
                 dispatch({ type: ACTIONS.FETCH_SUCCESS, payload: data });
