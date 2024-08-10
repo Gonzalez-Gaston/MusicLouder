@@ -1,4 +1,3 @@
-/* Asegúrate de que el contenedor principal se ajuste al espacio disponible */
 body, html {
     margin: 0;
     padding: 0;
@@ -12,9 +11,9 @@ body, html {
 }
 
 .main-content {
-    flex: 1; /* Ocupa el espacio disponible */
+    flex: 1;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     padding: 20px;
     box-sizing: border-box;
@@ -22,11 +21,11 @@ body, html {
 
 .songs-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     padding: 20px;
     box-sizing: border-box;
-    max-height: calc(100vh - 120px); /* Ajustar la altura para no superponerse con el nav y footer */
+    max-height: calc(100vh - 120px); 
     overflow-y: auto;
 }
 
@@ -40,3 +39,108 @@ body, html {
     padding: 20px;
     overflow-y: auto;
 }
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Songs.css */
+.CardSong {
+  background-color: black;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+  transition: transform 0.3s;
+}
+
+.CardSong:hover {
+  transform: scale(1.05);
+}
+
+.CardSong-image {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.CardSong-info {
+  text-align: center;
+  margin-top: 6px;
+}
+
+.CardSong-title {
+  font-size: 1em;
+  margin: 3px 0;
+}
+
+.CardSong-artist {
+  font-size: 0.85em;
+  margin: 2px 0;
+}
+
+.CardSong-album {
+  font-size: 0.75em;
+  margin: 2px 0;
+  color: #ccc;
+}
+
+.button-card {
+  background-color: black;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.button-card:hover {
+  transform: scale(1.05);
+}
+
+
+
