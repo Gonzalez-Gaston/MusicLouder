@@ -1,16 +1,16 @@
-import './App.css'
-import { Layout } from './components/Layout/Layout'
-import { AuthProvider } from './context/auth_context'
+// import './App.css'
+// import { Layout } from './components/Layout/Layout'
+// import { AuthProvider } from './context/auth_context'
 
-function App() {
+// function App() {
 
-  return (
-    <AuthProvider>
-      <div style={{width: "100%"}}>
-        <Layout />
-      </div>
-    </AuthProvider>
-  )
-}
+//   return (
+//     <AuthProvider>
+//       <div style={{width: "100%"}}>
+//         <Layout />
+//       </div>
+//     </AuthProvider>
+//   )
+// }
 
-export default App
+// export default App

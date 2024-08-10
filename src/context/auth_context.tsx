@@ -14,6 +14,7 @@ const ACTIONS = {
 function reducer(state: any, action: any) {
     switch (action.type) {
         case ACTIONS.LOGIN:
+            localStorage.setItem("authToken", action.payload);
             return {
                 ...state,
                 token: action.payload,

@@ -19,9 +19,6 @@ export const Login: React.FC = () => {
     }
   );
 
-  console.log(data);
-
-
   const { login }: any = useAuth("actions");
 
   function handleSubmit(event: any) {
