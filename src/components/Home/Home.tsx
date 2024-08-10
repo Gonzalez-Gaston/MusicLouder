@@ -1,41 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
+import { CardSong } from '../Songs/CardSong/CardSong';
+import { ArtistCard } from '../Artists/ArtistCard/ArtistCard';
 import './Home.css';
 
-interface CardProps {
-  title: string;
-  content: string;
-  image?: string;
-  link?: string;
-}
-
-interface Song {
+// Define los tipos directamente aquí
+type Song = {
   id: number;
-  name: string;
-  artist: string;
-  image: string;
-}
+  title: string;
+  artist: number[]; // Cambia a number[] para coincidir con la definición de Song en Song.tsx
+  album: number;    // Cambia a number para coincidir con la definición de Song en Song.tsx
+  cover: string;
+};
 
-interface Artist {
+type Artist = {
   id: number;
   name: string;
   bio: string;
   website: string;
   image: string;
-}
+};
 
-const Card: React.FC<CardProps> = ({ title, content, image, link }) => (
-  <div className="card">
-    {image && <img src={image} alt={title} className="card-image" />}
-    <div className="card-content">
-      <h3>{title}</h3>
-      <p>{content}</p>
-      {link && <a href={link} target="_blank" rel="noopener noreferrer">Más información</a>}
-    </div>
-  </div>
-);
-
-const Home: React.FC = () => {
+const Home = () => {
   const [topSongs, setTopSongs] = useState<Song[]>([]);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
@@ -72,17 +58,24 @@ const Home: React.FC = () => {
         <h1>¡Bienvenido a MusicLouder!</h1>
         <p>Tu destino definitivo para lo último en música.</p>
       </header>
-      
+
       <section className="section news">
         <h2>Noticias musicales y nuevos lanzamientos</h2>
         <div className="card-container">
-          <Card
+          {/* Aquí se utilizan CardSong para mostrar noticias */}
+          <CardSong
+            cover="../public/logo.jpeg"
             title="Nuevos lanzamientos musicales de esta semana"
-            content="¡Consulta los lanzamientos más recientes de tus artistas favoritos!"
+            artist=""
+            album=""
+            onClick={() => {}}
           />
-          <Card
+          <CardSong
+            cover="../public/logo.jpeg"
             title="Tendencias musicales en 2024"
-            content="Explora los géneros y artistas más populares del año."
+            artist=""
+            album=""
+            onClick={() => {}}
           />
         </div>
       </section>
@@ -92,12 +85,14 @@ const Home: React.FC = () => {
         <div className="card-container">
           {isSongsLoading && <p>Cargando canciones...</p>}
           {isSongsError && <p>Error al cargar las canciones.</p>}
-          {topSongs.map((song: Song) => (
-            <Card
+          {topSongs.map((song) => (
+            <CardSong
               key={song.id}
-              title={song.name}
-              content={`Artista: ${song.artist}`}
-              image={song.image}
+              cover={song.cover}
+              title={song.title}
+              artist={song.artist.join(', ')}
+              album={song.album.toString()}
+              onClick={() => {}}
             />
           ))}
         </div>
@@ -108,13 +103,13 @@ const Home: React.FC = () => {
         <div className="card-container">
           {isArtistsLoading && <p>Cargando artistas...</p>}
           {isArtistsError && <p>Error al cargar los artistas.</p>}
-          {topArtists.map((artist: Artist) => (
-            <Card
+          {topArtists.map((artist) => (
+            <ArtistCard
               key={artist.id}
-              title={artist.name}
-              content={artist.bio}
+              name={artist.name}
+              bio={artist.bio}
+              website={artist.website}
               image={artist.image}
-              link={artist.website}
             />
           ))}
         </div>
