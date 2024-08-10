@@ -1,0 +1,38 @@
+.artist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgb(0, 0, 0);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.artist-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.artist-form input[type="text"],
+.artist-form input[type="url"],
+.artist-form input[type="file"],
+.artist-form textarea {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.artist-form button {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.artist-form button:hover {
+    background-color: #0056b3;
+}

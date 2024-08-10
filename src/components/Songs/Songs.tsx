@@ -22,7 +22,7 @@ export interface Song {
 
 export function Songs() {
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(9);
+    const [pageSize] = useState(9);
     const [currentSong, setCurrentSong] = useState<Song | null>(null);
 
 

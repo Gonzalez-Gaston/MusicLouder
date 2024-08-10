@@ -8,6 +8,8 @@ import { Register } from "../components/Register/Register";
 import { Songs } from "../components/Songs/Songs";
 import { Albums } from "../components/Albums/Albums";
 import { Artists } from "../components/Artists/Artists";
+import { SongForm } from "../components/Songs/SongForm/Songform";
+import { ArtistForm } from "../components/Artists/ArtistForm/ArtistForm";
 
 export const Router = createBrowserRouter(
     [
@@ -33,21 +35,20 @@ export const Router = createBrowserRouter(
                     element: (
                         <PlayList />
                     ),
-                    
+
                 },
                 {
                     path: "/songs",
                     element: (
                         <Songs />
                     ),
-                    // children: [
-                    //     {
-                    //         path: ":id",
-                    //         element: (
-                    //             <Songs />
-                    //         ),
-                    //     }
-                    // ]
+
+                },
+                {
+                    path: "/songs/create",
+                    element: (
+                        <SongForm />
+                    ),
                 },
                 {
                     path: "/albums",
@@ -59,6 +60,12 @@ export const Router = createBrowserRouter(
                     path: "/artists",
                     element: (
                         <Artists />
+                    ),
+                },
+                {
+                    path: "/artists/create",
+                    element: (
+                        <ArtistForm />
                     ),
                 },
             ],
