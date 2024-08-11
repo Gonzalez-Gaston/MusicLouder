@@ -40,7 +40,7 @@ export function Artists() {
     <div className="artists-container">
       <AddArtistCard onClick={() => setIsModalOpen(true)} />
       {data.results.map((item: Artist) => (
-        <ArtistCard key={item.id} {...item} />
+        <ArtistCard key={item.id} onClick={() => null} {...item} />
       ))}
       <AddArtistModal
         isOpen={isModalOpen}

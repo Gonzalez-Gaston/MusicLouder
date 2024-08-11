@@ -1,5 +1,7 @@
 import { useState, FormEvent } from "react";
 import "./AddArtistModal.css";
+import { useAuth } from "../../../context/auth_context";
+import { useNavigate } from "react-router-dom";
 
 interface AddArtistModalProps {
   isOpen: boolean;
@@ -11,12 +13,18 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
   const [bio, setBio] = useState("");
   const [image, setImage] = useState("");
   const [website, setWebsite] = useState("");
+  const { isAuthenticated }: any = useAuth("state");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     onClose();
   };
+
+  if(!isAuthenticated){
+    navigate("/login")
+  } 
 
   if (!isOpen) return null;
 
