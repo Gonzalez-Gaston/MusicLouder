@@ -37,9 +37,10 @@ export function Artists() {
         <div className="artists-container">
             {data.results.map((item: Artist) => (
                 <ArtistCard
-                    key={item.id}
-                    {...item}
-                />
+                    onClick={function (): void {
+                        throw new Error('Function not implemented.');
+                    } } key={item.id}
+                    {...item}                />
             ))}
             <div className="pagination">
                 <button
