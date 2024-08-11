@@ -44,6 +44,7 @@ export function AuthProvider({ children }: any) {
         },
         logout: () => {
             dispatch({ type: ACTIONS.LOGOUT });
+            navigate("/");
         },
     };
 

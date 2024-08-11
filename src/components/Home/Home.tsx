@@ -1,41 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import './Home.css';
+import { Artist } from '../Artists/Artists';
+import { Song } from '../Songs/Songs';
+import { CardSong } from '../Songs/CardSong/CardSong';
+import { ArtistCard } from '../Artists/ArtistCard/ArtistCard';
 
-interface CardProps {
-  title: string;
-  content: string;
-  image?: string;
-  link?: string;
-}
-
-interface Song {
-  id: number;
-  name: string;
-  artist: string;
-  image: string;
-}
-
-interface Artist {
-  id: number;
-  name: string;
-  bio: string;
-  website: string;
-  image: string;
-}
-
-const Card: React.FC<CardProps> = ({ title, content, image, link }) => (
-  <div className="card">
-    {image && <img src={image} alt={title} className="card-image" />}
-    <div className="card-content">
-      <h3>{title}</h3>
-      <p>{content}</p>
-      {link && <a href={link} target="_blank" rel="noopener noreferrer">Más información</a>}
-    </div>
-  </div>
-);
-
-const Home: React.FC = () => {
+export function Home(){
   const [topSongs, setTopSongs] = useState<Song[]>([]);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
@@ -52,7 +23,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchSongs();
     fetchArtists();
-  }, [fetchSongs, fetchArtists]);
+  }, []); 
 
   useEffect(() => {
     if (songsData?.results) {
@@ -75,16 +46,6 @@ const Home: React.FC = () => {
       
       <section className="section news">
         <h2>Noticias musicales y nuevos lanzamientos</h2>
-        <div className="card-container">
-          <Card
-            title="Nuevos lanzamientos musicales de esta semana"
-            content="¡Consulta los lanzamientos más recientes de tus artistas favoritos!"
-          />
-          <Card
-            title="Tendencias musicales en 2024"
-            content="Explora los géneros y artistas más populares del año."
-          />
-        </div>
       </section>
 
       <section className="section songs">
@@ -93,11 +54,10 @@ const Home: React.FC = () => {
           {isSongsLoading && <p>Cargando canciones...</p>}
           {isSongsError && <p>Error al cargar las canciones.</p>}
           {topSongs.map((song: Song) => (
-            <Card
+            <CardSong
               key={song.id}
-              title={song.name}
-              content={`Artista: ${song.artist}`}
-              image={song.image}
+              onClick={() => null}
+              {...song}
             />
           ))}
         </div>
@@ -109,12 +69,10 @@ const Home: React.FC = () => {
           {isArtistsLoading && <p>Cargando artistas...</p>}
           {isArtistsError && <p>Error al cargar los artistas.</p>}
           {topArtists.map((artist: Artist) => (
-            <Card
+            <ArtistCard
               key={artist.id}
-              title={artist.name}
-              content={artist.bio}
-              image={artist.image}
-              link={artist.website}
+              {...artist}
+              onClick={() => null}
             />
           ))}
         </div>
@@ -124,3 +82,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+

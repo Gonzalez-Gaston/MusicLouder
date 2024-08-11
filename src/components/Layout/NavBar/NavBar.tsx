@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 export function NavBar() {
     const navigate = useNavigate();
-    const { token, isAuthenticated }: any = useAuth("state");
+    const { token, isAuthenticated}: any = useAuth("state");
+    const { logout }: any = useAuth("actions")
 
     // Realizar la solicitud HTTP cuando el componente se monta
     useEffect(() => {
@@ -30,6 +31,12 @@ export function NavBar() {
         }
     );
 
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
+
+
     return (
         <header className="nav-bar">
             <div>
@@ -47,9 +54,12 @@ export function NavBar() {
                     <p>Se ha producido un error</p>
                     : !isLoading && isAuthenticated ?
                         <div className="container-user">
+                            <button onClick={handleLogout}>
+                                Cerrar Sesión
+                            </button>
                             <h4>{data.last_name}</h4>
                             <img src="../public/user.png" alt="" className="user-icon" />
-                            <img src="../public/flecha.png" alt="" className="flecha-icon" />
+                            {/* <img src="../public/flecha.png" alt="" className="flecha-icon" /> */}
                         </div>
                         : isLoading && !isAuthenticated ? <button className="container-user" onClick={handleLoginClick}>Login</button> : null
             }
