@@ -29,7 +29,7 @@ export function Albums() {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
 
-  const navigate = useNavigate(); // Hook para redirigir
+  const navigate = useNavigate();
 
   const handleAlbumClick = (id: number) => {
     navigate(`/albums/${id}`);

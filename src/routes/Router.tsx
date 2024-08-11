@@ -14,6 +14,7 @@ import { AlbumForm } from "../components/Albums/AlbumForm/AlbumForm";
 import { AuthProvider } from "../context/auth_context";
 import ProtectedRoute from "./ProtectedRoutes";
 import { SongsByAlbum } from "../components/Albums/SongByAlbum/SongsByAlbum";
+import { SongGenre } from "../components/Songs/SongGenre/SongGenre";
 
 export const Router = createBrowserRouter(
   [
@@ -47,7 +48,17 @@ export const Router = createBrowserRouter(
         },
         {
           path: "/songs",
-          element: <Songs />,
+          children: [
+            {
+              index: true,
+              element: <Songs />,
+            },
+            {
+              path: "genre/:id",
+              element: <SongGenre />,
+            },
+
+            ]
         },
         {
           path: "/songs/create",
