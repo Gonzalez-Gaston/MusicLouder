@@ -7,8 +7,8 @@ interface CardSongProps extends Song {
 
 export function CardSong({ cover, title, artist, album, onClick }: CardSongProps) {
     return (
-        <div className="card-song" onClick={onClick}> {/* Agregar el manejador de clic */}
-            <img src={cover == null ? "../public/logo.jpeg" : cover} alt={`Album cover for ${title}`} className="card-song-image" />
+        <div className="card-song" onClick={onClick}>
+            <img src={cover || "../public/logo.jpeg"} alt={`Album cover for ${title}`} className="card-song-image" />
             <div className="card-song-info">
                 <h2 className="card-song-title">{title}</h2>
                 <p className="card-song-artist">{artist}</p>

@@ -7,7 +7,7 @@ export function ArtistCard(artist: Artist) {
             <img src={artist.image === null ? "../public/logo.jpeg" : artist.image} alt={`Imagen de ${artist.name}`} className="artist-card-image" />
             <div className="artist-card-info">
                 <h2 className="artist-card-name">{artist.name}</h2>
-                <p className="artist-card-bio">{artist.bio}</p>
+                
                 <a href={artist.website} className="artist-card-website" target="_blank" rel="noopener noreferrer">
                     Sitio Web
                 </a>

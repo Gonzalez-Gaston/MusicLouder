@@ -18,22 +18,20 @@ export interface Artist {
 
 export function Artists() {
     const [page, setPage] = useState(1);
-    const [pageSize] = useState(9);
+    const [pageSize] = useState(8); // 8 tarjetas por página
 
     const [{ data, isError, isLoading }, doFetch] = useFetch(
         "https://sandbox.academiadevelopers.com/harmonyhub/artists/",
         {}
     );
 
-    console.log(data);
-
     useEffect(() => {
-        doFetch({ page, page_size: pageSize }); 
-    }, [page, pageSize]); 
+        doFetch({ page, page_size: pageSize });
+    }, [page, pageSize]);
 
     if (isLoading) return <p>Cargando...</p>;
-    if (isError) return <p>Error al cargar las canciones.</p>;
-    if (!data || !data.results) return <p>No hay canciones disponibles</p>;
+    if (isError) return <p>Error al cargar los artistas.</p>;
+    if (!data || !data.results) return <p>No hay artistas disponibles</p>;
 
     return (
         <div className="artists-container">
@@ -43,9 +41,19 @@ export function Artists() {
                     {...item}
                 />
             ))}
-            <div className="pagination-controls">
-                <button onClick={() => setPage(prevPage => Math.max(prevPage - 1, 1))}>Anterior</button>
-                <button onClick={() => setPage(prevPage => (data.next ? prevPage + 1 : prevPage))}>Siguiente</button>
+            <div className="pagination">
+                <button
+                    onClick={() => setPage(prevPage => Math.max(prevPage - 1, 1))}
+                    disabled={page === 1}
+                >
+                    &lt;
+                </button>
+                <button
+                    onClick={() => setPage(prevPage => (data.next ? prevPage + 1 : prevPage))}
+                    disabled={!data.next}
+                >
+                    &gt;
+                </button>
             </div>
         </div>
     );

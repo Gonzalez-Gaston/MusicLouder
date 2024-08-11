@@ -1,46 +1,58 @@
 .artist-card {
-    background-color: black;
-    color: white;
-    padding: 8px;
-    border-radius: 6px;
-    width: 180px; /* Ajusta el ancho para que quepan 4 tarjetas en una fila */
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: #000000;
+    border: 1px solid #ffd700;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 200px; /* Tamaño uniforme */
+    height: 280px; /* Ajusta la altura según sea necesario */
+    color: #fff;
     margin: 10px; /* Espacio entre tarjetas */
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Asegura que el contenido se apile verticalmente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para efecto de hover */
 }
 
 .artist-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05); /* Escala ligeramente la tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
 }
 
 .artist-card-image {
     width: 100%;
-    height: auto;
-    border-radius: 6px;
+    height: 150px; /* Ajuste para el tamaño de la imagen */
+    object-fit: cover;
+    transition: opacity 0.3s ease; /* Transición para opacidad */
+}
+
+.artist-card:hover .artist-card-image {
+    opacity: 0.8; /* Reduce la opacidad de la imagen */
 }
 
 .artist-card-info {
-    text-align: center;
-    margin-top: 8px;
+    padding: 10px;
+    flex: 1; /* Permite que la sección de info se expanda para llenar el espacio restante */
+    display: flex;
+    flex-direction: column; /* Apila el contenido verticalmente */
+    justify-content: space-between; /* Asegura que los elementos se distribuyan uniformemente */
 }
 
 .artist-card-name {
-    font-size: 1em;
-    margin: 4px 0;
+    font-size: 1.2em; /* Tamaño de fuente ajustado */
+    margin: 0;
+    color: #ffd700;
 }
 
 .artist-card-bio {
-    font-size: 0.85em;
-    color: #ccc;
-    margin: 4px 0;
+    font-size: 0.9em; /* Tamaño de fuente ajustado */
+    margin: 5px 0;
 }
 
 .artist-card-website {
-    color: #007bff;
+    color: #ffd700;
     text-decoration: none;
-    font-size: 0.85em;
+    margin-top: 10px;
+}
+
+.artist-card-website:hover {
+    text-decoration: underline;
 }

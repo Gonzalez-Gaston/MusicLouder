@@ -3,45 +3,41 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
-    gap: 20px; /* Espacio entre filas y columnas */
+    gap: 20px;
+    padding-bottom: 80px; /* Espacio adicional para los botones de paginación */
+    position: relative; /* Necesario para el posicionamiento de la paginación */
 }
 
 .pagination {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    background-color: black;
+    position: sticky; /* Fijo en la parte inferior del contenedor */
+    bottom: 0; /* Alinea los botones en la parte inferior del contenedor */
+    left: 0;
+    right: 0;
+    background-color: #000000; /* Fondo negro para el contenedor de la paginación */
     padding: 10px;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Espacio entre los botones */
+    z-index: 10; /* Asegura que los botones estén por encima de otros elementos si es necesario */
 }
 
 .pagination button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
+    background-color: #000000;
+    color: #ffd700;
+    border: 1px solid #ffd700;
     border-radius: 4px;
+    padding: 8px 25px; /* Ajuste para el tamaño del botón */
     cursor: pointer;
-    margin: 0 5px;
+    font-size: 1.2em;
 }
 
 .pagination button:disabled {
-    background-color: #ccc;
+    background-color: #000000;
+    color: #ccc;
     cursor: not-allowed;
 }
 
-.pagination span {
-    color: white;
-    margin: 0 10px;
-}
-
-.audio-player {
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-    background-color: black;
-    padding: 10px;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.pagination button:hover {
+    background-color: #000000;
+    border-color: #ffd700;
 }
