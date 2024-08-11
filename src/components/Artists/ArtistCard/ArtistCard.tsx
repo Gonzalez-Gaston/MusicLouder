@@ -3,27 +3,25 @@ import { Artist } from '../Artists';
 import './ArtistCard.css';
 
 interface ArtistCardProps extends Artist {
-    onClick: () => void; // Agrega el tipo para el manejador de clic
+    onClick: () => void;
 }
 
 export function ArtistCard({ image, name, website, onClick }: ArtistCardProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuToggle = (e: React.MouseEvent) => {
-        e.stopPropagation(); // Evita que el clic en el botón de menú propague al contenedor de la tarjeta
+        e.stopPropagation(); 
         setIsMenuOpen(prevState => !prevState);
     };
 
     const handleEdit = () => {
-        // Lógica para editar el artista
         console.log('Editar artista');
-        setIsMenuOpen(false); // Cierra el menú después de seleccionar una opción
+        setIsMenuOpen(false);
     };
 
     const handleDelete = () => {
-        // Lógica para eliminar el artista
         console.log('Eliminar artista');
-        setIsMenuOpen(false); // Cierra el menú después de seleccionar una opción
+        setIsMenuOpen(false);
     };
 
     return (
@@ -41,12 +39,12 @@ export function ArtistCard({ image, name, website, onClick }: ArtistCardProps) {
             {isMenuOpen && (
                 <div className="artist-card-menu">
                     <button className="artist-card-menu-item" onClick={handleEdit}>
-                        {/* Aquí deberías colocar el icono para editar */}
+                        {}
                         <img src="public\pen_edit_modify_pencil_icon_181536.png" alt="Editar" className="icon" />
                         Editar
                     </button>
                     <button className="artist-card-menu-item" onClick={handleDelete}>
-                        {/* Aquí deberías colocar el icono para eliminar */}
+                        {}
                         <img src="public\delete_remove_close_icon_181533.png" alt="Eliminar" className="icon" />
                         Eliminar
                     </button>
