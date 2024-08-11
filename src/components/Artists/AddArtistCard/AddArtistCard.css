@@ -8,7 +8,6 @@
   padding: 8px;
   border-radius: 6px;
   width: 180px;
-  height: 240px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
