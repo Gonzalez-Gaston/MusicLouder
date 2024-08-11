@@ -1,15 +1,17 @@
 import { Album } from "../Albums";
 import "./CardAlbum.css";
 
-// interface CardAlbumProps extends Album {}
+interface CardAlbumProps extends Album {
+    onClick: () => void;
+}
 
-export function CardAlbum(album: Album){
+export function CardAlbum({cover, title, year, onClick}: CardAlbumProps){
     return (
-        <div className="card-album">
-            <img src={album.cover == null ? "../public/logo.jpeg" : album.cover} alt="" className="card-album-image" />
+        <div className="card-album"  onClick={onClick}>
+            <img src={cover == null ? "../public/logo.jpeg" : cover} alt="" className="card-album-image" />
             <div className="card-album-info">
-                <h2 className="card-album-title">{album.title}</h2>
-                <p className="card-album-year">{album.year}</p>
+                <h2 className="card-album-title">{title}</h2>
+                <p className="card-album-year">{year}</p>
             </div>
         </div>
     );

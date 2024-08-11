@@ -4,6 +4,7 @@ import { CardAlbum } from "./CardAlbum/CardAlbum";
 import { AddAlbumCard } from "./AddAlbumCard/AddAlbumCard";
 import { AddAlbumModal } from "./AddAlbumCard/AddAlbumModal";
 import "./Albums.css";
+import { useNavigate } from "react-router-dom";
 
 export interface Album {
   id: number;
@@ -17,7 +18,7 @@ export interface Album {
 
 export function Albums() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(9);
+  const [pageSize] = useState(8);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [{ data, isError, isLoading }, doFetch] = useFetch(
     "https://sandbox.academiadevelopers.com/harmonyhub/albums/",
@@ -28,6 +29,12 @@ export function Albums() {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
 
+  const navigate = useNavigate(); // Hook para redirigir
+
+  const handleAlbumClick = (id: number) => {
+    navigate(`/albums/${id}`);
+  };
+
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error al cargar los álbumes.</p>;
   if (!data) return <p>No hay álbumes disponibles</p>;
@@ -36,7 +43,7 @@ export function Albums() {
     <div className="albums-container">
       <AddAlbumCard onClick={() => setIsModalOpen(true)} />
       {data.results.map((item: Album) => (
-        <CardAlbum key={item.id} {...item} />
+        <CardAlbum key={item.id} {...item} onClick={() => handleAlbumClick(item.id)}/>
       ))}
       <AddAlbumModal
         isOpen={isModalOpen}

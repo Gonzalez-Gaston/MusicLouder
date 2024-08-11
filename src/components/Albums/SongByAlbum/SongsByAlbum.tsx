@@ -1,34 +1,19 @@
 import { useState, useEffect } from "react";
-import { CardSong } from "./CardSong/CardSong";
-import { AudioPlayer } from "./AudioPlayer/AudioPlayer";
-import { SongForm } from "./SongForm/Songform";
-import { useFetch } from "../../hooks/useFetch";
-import "./Songs.css";
+import "./SongByAlbum.css";
+import { useParams } from "react-router-dom";
+import { Song } from "../../Songs/Songs";
+import { CardSong } from "../../Songs/CardSong/CardSong";
+import { AudioPlayer } from "../../Songs/AudioPlayer/AudioPlayer";
+import { useFetch } from "../../../hooks/useFetch";
 
-export interface Song {
-  id: number;
-  title: string;
-  artist: number[];
-  genres: number[];
-  duration: number;
-  owner: number;
-  view_count: number;
-  album: number;
-  cover: string;
-  song_file: string;
-  created_at: Date;
-  updated_at: Date;
-  year: number;
-}
-
-export function Songs() {
+export function SongsByAlbum() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(9);
+  const [pageSize] = useState(8);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { id } = useParams();
 
   const [{ data, isError, isLoading }, doFetch] = useFetch(
-    "https://sandbox.academiadevelopers.com/harmonyhub/songs/",
+    `https://sandbox.academiadevelopers.com/harmonyhub/albums/${id}/songs/`,
     {}
   );
 
@@ -44,15 +29,6 @@ export function Songs() {
     setCurrentSong(null);
   };
 
-  const handleAddSongClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  console.log(data)
 
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error al cargar las canciones.</p>;
@@ -60,13 +36,6 @@ export function Songs() {
 
   return (
     <div className="songs-container">
-      <button className="add-song-button" onClick={handleAddSongClick}>
-        <img
-          src="../public/addIcon3.svg"
-          alt="Agregar"
-          className="button-icon"
-        />
-      </button>
       <div className="cards-pagination-container">
         <div className="cards-container">
           {data.results.map((item: Song) => (
@@ -98,16 +67,6 @@ export function Songs() {
           isPlaying={true}
           onEnded={handleAudioEnded}
         />
-      )}
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseModal}>
-              ×
-            </span>
-            <SongForm />
-          </div>
-        </div>
       )}
     </div>
   );

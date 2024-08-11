@@ -13,6 +13,7 @@ import { ArtistForm } from "../components/Artists/ArtistForm/ArtistForm";
 import { AlbumForm } from "../components/Albums/AlbumForm/AlbumForm";
 import { AuthProvider } from "../context/auth_context";
 import ProtectedRoute from "./ProtectedRoutes";
+import { SongsByAlbum } from "../components/Albums/SongByAlbum/SongsByAlbum";
 
 export const Router = createBrowserRouter(
   [
@@ -54,12 +55,23 @@ export const Router = createBrowserRouter(
         },
         {
           path: "/albums",
-          element: <Albums />,
+          children: [
+            {
+              index: true,
+              path: "",
+              element: <Albums />
+            },
+            {
+              path: ":id",
+              element: <SongsByAlbum />
+            },
+
+          ]
         },
         {
-            path: "/albums/create",
-            element: <AlbumForm />,
-          },
+          path: "/albums/create",
+          element: <AlbumForm />,
+        },
         {
           path: "/artists",
           element: <Artists />,
