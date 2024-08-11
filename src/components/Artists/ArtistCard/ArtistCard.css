@@ -8,39 +8,90 @@
     transition: transform 0.3s, box-shadow 0.3s;
     margin: 10px; 
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Asegura que el contenido se apile verticalmente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
+    position: relative; /* Necesario para posicionar el menú absolutamente dentro de la tarjeta */
 }
 
 .artist-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05); /* Escala ligeramente la tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
 }
 
 .artist-card-image {
     width: 100%;
-    height: auto;
-    border-radius: 6px;
+    height: 150px; /* Ajuste para el tamaño de la imagen */
+    object-fit: cover;
+    transition: opacity 0.3s ease; /* Transición para opacidad */
+}
+
+.artist-card:hover .artist-card-image {
+    opacity: 0.8; /* Reduce la opacidad de la imagen */
 }
 
 .artist-card-info {
-    text-align: center;
-    margin-top: 8px;
+    padding: 10px;
+    flex: 1; /* Permite que la sección de info se expanda para llenar el espacio restante */
+    display: flex;
+    flex-direction: column; /* Apila el contenido verticalmente */
+    justify-content: space-between; /* Asegura que los elementos se distribuyan uniformemente */
 }
 
 .artist-card-name {
-    font-size: 1em;
-    margin: 4px 0;
-}
-
-.artist-card-bio {
-    font-size: 0.85em;
-    color: #ccc;
-    margin: 4px 0;
+    font-size: 1.2em; /* Tamaño de fuente ajustado */
+    margin: 0;
+    color: #ffd700;
 }
 
 .artist-card-website {
-    color: #007bff;
+    color: #ffd700;
     text-decoration: none;
-    font-size: 0.85em;
+    margin-top: 10px;
+}
+
+.artist-card-website:hover {
+    text-decoration: underline;
+}
+
+.artist-card-menu-button {
+    background: transparent; /* Fondo transparente para el botón del menú */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    position: absolute; /* Posición absoluta para ubicar el botón */
+    bottom: 10px; /* Ajusta la posición del botón en la parte inferior */
+    right: 10px; /* Ajusta la posición del botón en la parte derecha */
+}
+
+.artist-card-menu-button img {
+    width: 24px; /* Tamaño del icono del botón de menú */
+    height: 24px; /* Tamaño del icono del botón de menú */
+}
+
+.artist-card-menu {
+    position: absolute; /* Posición absoluta para el menú */
+    bottom: 10px; /* Ajusta la posición del menú en la parte inferior */
+    right: 10px; /* Ajusta la posición del menú en la parte derecha */
+    background: #000; /* Fondo del menú */
+    border: 1px solid #ffd700; /* Borde del menú */
+    border-radius: 4px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra del menú */
+    display: flex; /* Flexbox para alinear los botones del menú */
+    flex-direction: column; /* Dirección vertical para los botones del menú */
+    z-index: 1; /* Asegura que el menú esté sobre otros elementos */
+}
+
+.artist-card-menu-item {
+    background: transparent; /* Fondo transparente para los elementos del menú */
+    border: none; /* Sin borde */
+    color: #ffd700; /* Color del texto */
+    padding: 8px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    display: flex; /* Flexbox para alinear el icono y el texto */
+    align-items: center; /* Alineación vertical del icono y el texto */
+}
+
+.artist-card-menu-item .icon {
+    width: 16px; /* Tamaño del icono dentro del menú */
+    height: 16px; /* Tamaño del icono dentro del menú */
+    margin-right: 8px; /* Espacio entre el icono y el texto */
 }

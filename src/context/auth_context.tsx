@@ -11,18 +11,23 @@ const ACTIONS = {
     LOGOUT: "LOGOUT",
 };
 
+
+
 function reducer(state: any, action: any) {
     switch (action.type) {
         case ACTIONS.LOGIN:
             localStorage.setItem("authToken", action.payload);
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.token,
+                user: action.payload.user,
                 isAuthenticated: true,
             };
         case ACTIONS.LOGOUT:
             return {
                 isAuthenticated: false,
+                token: null,
+                user: null,
             };
         default:
             return state;
@@ -37,13 +42,36 @@ export function AuthProvider({ children }: any) {
     const location = useLocation();
 
     const actions = {
-        login: (token: string) => {
-            dispatch({ type: ACTIONS.LOGIN, payload: token });
+        login: async (token: string) => {
+            dispatch({ type: ACTIONS.LOGIN, payload: { token, user: null } });
+    
+            try {
+                const response = await fetch("https://sandbox.academiadevelopers.com/users/profiles/profile_data/", {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                });
+                if (response.ok) {
+                    const userData = await response.json();
+                    console.log(userData)
+                    dispatch({ type: ACTIONS.LOGIN, payload: { token, user: userData } });
+                } else {
+                    // Manejo de errores si la solicitud falla
+                    dispatch({ type: ACTIONS.LOGOUT });
+                }
+            } catch (error) {
+                // Manejo de errores si la solicitud falla
+                console.error("Error fetching user data:", error);
+                dispatch({ type: ACTIONS.LOGOUT });
+            }
+    
             const origin = location.state?.from?.pathname || "/";
             navigate(origin);
         },
         logout: () => {
             dispatch({ type: ACTIONS.LOGOUT });
+            navigate("/");
         },
     };
 
