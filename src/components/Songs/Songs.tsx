@@ -52,6 +52,8 @@ export function Songs() {
     setIsModalOpen(false);
   };
 
+  console.log(data)
+
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error al cargar las canciones.</p>;
   if (!data || !data.results) return <p>No hay canciones disponibles</p>;
