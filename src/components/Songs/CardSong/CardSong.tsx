@@ -4,12 +4,12 @@ import './CardSong.css';
 import { useAuth } from '../../../context/auth_context';
 
 interface CardSongProps extends Song {
-    onClick: () => void; 
+    onClick: () => void;
 }
 
-export function CardSong({ cover, title, artist, album, owner, onClick }: CardSongProps) {
+export function CardSong({ id, cover, title, artist, album, owner, onClick }: CardSongProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { isAuthenticated, user }: any = useAuth("state");
+    const { isAuthenticated, user, token }: any = useAuth("state");
 
     const handleMenuToggle = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -21,10 +21,29 @@ export function CardSong({ cover, title, artist, album, owner, onClick }: CardSo
         setIsMenuOpen(false);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async() => {
         if (window.confirm('¿Estás seguro de que deseas eliminar esta canción?')) {
-            console.log('Eliminar canción');
-            setIsMenuOpen(false); 
+            try {
+                const response = await fetch(
+                    `https://sandbox.academiadevelopers.com/harmonyhub/songs/${id}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                    }
+                );
+
+                if (response.ok) {
+                    console.log("Song saved successfully");
+                    //   onClose();
+                } else {
+                    console.error("Failed to save song");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            setIsMenuOpen(false);
         }
     };
 
@@ -58,7 +77,7 @@ export function CardSong({ cover, title, artist, album, owner, onClick }: CardSo
                                     <img src="public/delete_remove_close_icon_181533.png" alt="Eliminar" className="icon" />
                                     Eliminar
                                 </button>
-                                <button className="card-song-menu-item" onClick={handleAddToPlaylist}>                        
+                                <button className="card-song-menu-item" onClick={handleAddToPlaylist}>
                                     <img src="public/plus_insert_add_new_icon_181537.png" alt="Agregar" className="icon" />
                                     Agregar a la playlist
                                 </button>

@@ -5,6 +5,8 @@ import "./Artists.css";
 import { useFetch } from "../../hooks/useFetch";
 import { AddArtistCard } from "./AddArtistCard/AddArtistCard";
 import { AddArtistModal } from "./AddArtistModal/AddArtistModal";
+import { useAuth } from "../../context/auth_context";
+import { useNavigate } from "react-router-dom";
 
 export interface Artist {
   id: number;
@@ -23,6 +25,8 @@ export function Artists() {
   const [pageSize] = useState(7); // Mostrar 7 tarjetas por página
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
+  const { isAuthenticated }: any = useAuth("state");
+  const navigate = useNavigate();
 
   const [{ data, isError, isLoading }, doFetch] = useFetch(
     "https://sandbox.academiadevelopers.com/harmonyhub/artists/",
@@ -46,7 +50,14 @@ export function Artists() {
     <div className="artists-container">
       <div className="cards-pagination-container">
         <div className="cards-container">
-          <AddArtistCard onClick={() => { setSelectedArtist(null); setIsModalOpen(true); }} />
+          <AddArtistCard onClick={() => { 
+            if(isAuthenticated){
+              setSelectedArtist(null); 
+              setIsModalOpen(true); 
+            } else {
+              navigate("/login")
+            }
+            }} />
           {data.results.map((item: Artist) => (
             <ArtistCard key={item.id} onClick={handleCardClick} {...item} artist={item}/>
           ))}

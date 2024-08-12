@@ -10,6 +10,7 @@ interface ArtistCardProps extends Artist {
 
 
 export function ArtistCard({
+  id,
   image,
   name,
   website,
@@ -18,7 +19,7 @@ export function ArtistCard({
   artist
 }: ArtistCardProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, user }: any = useAuth("state");
+  const { isAuthenticated, user, token }: any = useAuth("state");
 
   const handleMenuToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,14 +31,33 @@ export function ArtistCard({
     setIsMenuOpen(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este artista?')) {
-      console.log("Eliminar artista");
+      try {
+        const response = await fetch(
+          `https://sandbox.academiadevelopers.com/harmonyhub/artists/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+
+        if (response.ok) {
+          console.log("Song saved successfully");
+          //   onClose();
+        } else {
+          console.error("Failed to save song");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
       setIsMenuOpen(false);
     }
   };
 
-  const handleAddToPlaylist = () => {
+  const handleAddToPlaylist = async () => {
     console.log("Agregar a la playlist");
     setIsMenuOpen(false);
   };
@@ -62,7 +82,6 @@ export function ArtistCard({
       </div>
       {isAuthenticated && owner === user?.user__id && (
         <>
-          {" "}
           <button
             className="artist-card-menu-button"
             onClick={handleMenuToggle}

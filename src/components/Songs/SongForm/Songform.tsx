@@ -1,30 +1,51 @@
 import React, { useState } from 'react';
 import './SongForm.css';
+import { useAuth } from '../../../context/auth_context';
 
 export function SongForm() {
     const [title, setTitle] = useState('');
-    const [artist, setArtist] = useState('');
+    const [year, setArtist] = useState('');
     const [album, setAlbum] = useState('');
-    const [songFile, setSongFile] = useState<File | null>(null);
+    const { isAuthenticated, token }: any = useAuth("state");
+    // const [songFile, setSongFile] = useState<File | null>(null);
 
-    const handleSongFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setSongFile(e.target.files[0]);
-        }
-    };
+    // const handleSongFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files && e.target.files[0]) {
+    //         setSongFile(e.target.files[0]);
+    //     }
+    // };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        if (title && artist && album && songFile) {
+
+        if (title && year && album) {
             const formData = new FormData();
             formData.append('title', title);
-            formData.append('artist', artist);
+            formData.append('artist', year);
             formData.append('album', album);
-            formData.append('songFile', songFile);
+            // formData.append('songFile', songFile);
 
-            // Aquí iría la lógica para enviar los datos al backend
-            console.log('Song form submitted');
+            try {
+                const response = await fetch(
+                    "https://sandbox.academiadevelopers.com/harmonyhub/songs/",
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                        body: formData,
+                    }
+                );
+
+                if (response.ok) {
+                    console.log("Song saved successfully");
+                    //   onClose();
+                } else {
+                    console.error("Failed to save song");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
         } else {
             alert('Please fill in all fields');
         }
@@ -37,17 +58,17 @@ export function SongForm() {
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
             </label>
             <label>
-                Artista:
-                <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)} required />
+                Año:
+                <input type="text" value={year} onChange={(e) => setArtist(e.target.value)} required />
             </label>
             <label>
                 Álbum:
                 <input type="text" value={album} onChange={(e) => setAlbum(e.target.value)} required />
             </label>
-            <label>
+            {/* <label>
                 Archivo de Canción:
                 <input type="file" accept="audio/*" onChange={handleSongFileChange} required />
-            </label>
+            </label> */}
             <button type="submit">Crear Canción</button>
         </form>
     );

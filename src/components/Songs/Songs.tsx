@@ -4,6 +4,8 @@ import { SongForm } from "./SongForm/Songform";
 import { useFetch } from "../../hooks/useFetch";
 import "./Songs.css";
 import { useAudioPlayer } from "../../context/audio_player_context";
+import { useAuth } from "../../context/auth_context";
+import { useNavigate } from "react-router-dom";
 
 export interface Song {
   id: number;
@@ -23,9 +25,11 @@ export interface Song {
 
 export function Songs() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(7);
+  const [pageSize] = useState(11);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { src, isPlaying, playSong, pauseSong } = useAudioPlayer();
+  const { isAuthenticated }: any = useAuth("state");
+  const navigate = useNavigate();
 
   const handleCardClick = (song: Song) => {
     if (src === song.song_file && isPlaying) {
@@ -36,7 +40,11 @@ export function Songs() {
   };
 
   const handleAddSongClick = () => {
-    setIsModalOpen(true);
+    if(isAuthenticated){
+      setIsModalOpen(true);
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleCloseModal = () => {

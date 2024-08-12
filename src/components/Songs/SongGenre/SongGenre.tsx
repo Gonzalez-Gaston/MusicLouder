@@ -8,7 +8,7 @@ import { useAudioPlayer } from "../../../context/audio_player_context";
 
 export function SongGenre() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(8);
+  const [pageSize] = useState(12);
   const { src, isPlaying, playSong, pauseSong} = useAudioPlayer();
   const { id } = useParams();
 

@@ -4,11 +4,11 @@ import "./CardAlbum.css";
 import { useAuth } from '../../../context/auth_context';
 
 interface CardAlbumProps extends Album {
-    onClick: () => void; 
+    onClick: () => void;
 }
 
-export function CardAlbum({ cover, title, year, owner, onClick }: CardAlbumProps) {
-    const { isAuthenticated, user }: any = useAuth("state");
+export function CardAlbum({ id, cover, title, year, owner, onClick }: CardAlbumProps) {
+    const { isAuthenticated, user,token }: any = useAuth("state");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuToggle = (e: React.MouseEvent) => {
@@ -21,9 +21,28 @@ export function CardAlbum({ cover, title, year, owner, onClick }: CardAlbumProps
         setIsMenuOpen(false);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este álbum?')) {
-            console.log('Eliminar álbum');
+            try {
+                const response = await fetch(
+                    `https://sandbox.academiadevelopers.com/harmonyhub/albums/${id}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                    }
+                );
+
+                if (response.ok) {
+                    console.log("Song saved successfully");
+                    //   onClose();
+                } else {
+                    console.error("Failed to save song");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
             setIsMenuOpen(false);
         }
     };

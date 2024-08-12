@@ -5,6 +5,7 @@ import { AddAlbumCard } from "./AddAlbumCard/AddAlbumCard";
 import { AddAlbumModal } from "./AddAlbumCard/AddAlbumModal";
 import "./Albums.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth_context";
 
 export interface Album {
   id: number;
@@ -19,20 +20,21 @@ export interface Album {
 
 export function Albums() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(11); // Mostrar 7 tarjetas
+  const [pageSize] = useState(12); // Mostrar 7 tarjetas
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [{ data, isError, isLoading }, doFetch] = useFetch(
     "https://sandbox.academiadevelopers.com/harmonyhub/albums/",
     {}
   );
 
+  const { isAuthenticated }: any = useAuth("state");
+  const navigate = useNavigate();
+
   console.log(data)
 
   useEffect(() => {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
-
-  const navigate = useNavigate();
 
   const handleAlbumClick = (id: number) => {
     navigate(`/albums/${id}`);
@@ -46,7 +48,16 @@ export function Albums() {
     <div className="albums-container">
       <div className="cards-pagination-container">
         <div className="cards-container">
-          <AddAlbumCard onClick={() => setIsModalOpen(true)} />
+          <AddAlbumCard onClick={() => {
+            if(isAuthenticated){
+              setIsModalOpen(true)
+            }else{
+              navigate("/login");
+            }
+          }
+
+          } 
+            />
           {data.results.map((item: Album) => (
             <CardAlbum key={item.id} {...item} onClick={() => handleAlbumClick(item.id)}/>
           ))}
