@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext, ReactNode } from "react";
+import { createContext, useReducer, useContext, ReactNode, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface User {
@@ -27,6 +27,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const ACTIONS = {
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
+  SET_USER: "SET_USER",
 };
 
 function reducer(state: AuthState, action: any): AuthState {
@@ -36,8 +37,12 @@ function reducer(state: AuthState, action: any): AuthState {
       return {
         ...state,
         token: action.payload.token,
-        user: action.payload.user,
         isAuthenticated: true,
+      };
+    case ACTIONS.SET_USER:
+      return {
+        ...state,
+        user: action.payload.user,
       };
     case ACTIONS.LOGOUT:
       localStorage.removeItem("authToken");
@@ -60,9 +65,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Efecto para verificar si existe un token en localStorage al cargar la aplicación
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      dispatch({ type: ACTIONS.LOGIN, payload: { token } });
+
+      // Intenta cargar los datos del usuario
+      (async () => {
+        try {
+          const response = await fetch(
+            "https://sandbox.academiadevelopers.com/users/profiles/profile_data/",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            }
+          );
+          if (response.ok) {
+            const userData = await response.json();
+            dispatch({ type: ACTIONS.SET_USER, payload: { user: userData } });
+          } else {
+            dispatch({ type: ACTIONS.LOGOUT });
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          dispatch({ type: ACTIONS.LOGOUT });
+        }
+      })();
+    }
+  }, []);
+
   const actions = {
     login: async (token: string) => {
-      dispatch({ type: ACTIONS.LOGIN, payload: { token, user: null } });
+      dispatch({ type: ACTIONS.LOGIN, payload: { token } });
 
       try {
         const response = await fetch(
@@ -76,7 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         );
         if (response.ok) {
           const userData = await response.json();
-          dispatch({ type: ACTIONS.LOGIN, payload: { token, user: userData } });
+          dispatch({ type: ACTIONS.SET_USER, payload: { user: userData } });
         } else {
           dispatch({ type: ACTIONS.LOGOUT });
         }
