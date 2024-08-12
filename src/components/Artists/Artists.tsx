@@ -22,6 +22,7 @@ export function Artists() {
   const [page, setPage] = useState(1);
   const [pageSize] = useState(7); // Mostrar 7 tarjetas por página
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
 
   const [{ data, isError, isLoading }, doFetch] = useFetch(
     "https://sandbox.academiadevelopers.com/harmonyhub/artists/",
@@ -32,6 +33,11 @@ export function Artists() {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
 
+  const handleCardClick = (artist: Artist) => {
+    setSelectedArtist(artist);
+    setIsModalOpen(true);
+  };
+
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error al cargar las canciones.</p>;
   if (!data || !data.results) return <p>No hay canciones disponibles</p>;
@@ -40,9 +46,9 @@ export function Artists() {
     <div className="artists-container">
       <div className="cards-pagination-container">
         <div className="cards-container">
-          <AddArtistCard onClick={() => setIsModalOpen(true)} />
+          <AddArtistCard onClick={() => { setSelectedArtist(null); setIsModalOpen(true); }} />
           {data.results.map((item: Artist) => (
-            <ArtistCard key={item.id} onClick={() => null} {...item} />
+            <ArtistCard key={item.id} onClick={handleCardClick} {...item} artist={item}/>
           ))}
         </div>
         <div className="pagination-controls">
@@ -50,19 +56,20 @@ export function Artists() {
             onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
             disabled={page === 1}
           >
-            &lt;
+            
           </button>
           <button
             onClick={() => setPage((prevPage) => (data.next ? prevPage + 1 : prevPage))}
             disabled={!data.next}
           >
-            &gt;
+            
           </button>
         </div>
       </div>
       <AddArtistModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        artist={selectedArtist}
       />
     </div>
   );
