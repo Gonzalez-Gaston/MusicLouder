@@ -12,18 +12,21 @@ export interface Album {
   artist: number;
   cover: string;
   year: number;
+  owner: number;
   created_at: Date;
   updated_at: Date;
 }
 
 export function Albums() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(7); // Mostrar 7 tarjetas
+  const [pageSize] = useState(11); // Mostrar 7 tarjetas
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [{ data, isError, isLoading }, doFetch] = useFetch(
     "https://sandbox.academiadevelopers.com/harmonyhub/albums/",
     {}
   );
+
+  console.log(data)
 
   useEffect(() => {
     doFetch({ page, page_size: pageSize });
