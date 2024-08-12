@@ -3,13 +3,13 @@ import "./SongGenre.css";
 import { useParams } from "react-router-dom";
 import { Song } from "../../Songs/Songs";
 import { CardSong } from "../../Songs/CardSong/CardSong";
-import { AudioPlayer } from "../../Songs/AudioPlayer/AudioPlayer";
 import { useFetch } from "../../../hooks/useFetch";
+import { useAudioPlayer } from "../../../context/audio_player_context";
 
 export function SongGenre() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(2);
-  const [currentSong, setCurrentSong] = useState<Song | null>(null);
+  const [pageSize] = useState(8);
+  const { src, isPlaying, playSong, pauseSong} = useAudioPlayer();
   const { id } = useParams();
 
   const url = `https://sandbox.academiadevelopers.com/harmonyhub/songs/?genres=${id}&page=${page}&page_size=${pageSize}`;
@@ -21,11 +21,11 @@ export function SongGenre() {
   }, [id, page, pageSize]);
 
   const handleCardClick = (song: Song) => {
-    setCurrentSong(song);
-  };
-
-  const handleAudioEnded = () => {
-    setCurrentSong(null);
+    if (src === song.song_file && isPlaying) {
+      pauseSong();
+    } else {
+      playSong(song.song_file);
+    }
   };
 
   if (isLoading) return <p>Cargando...</p>;
@@ -61,13 +61,6 @@ export function SongGenre() {
           </button>
         </div>
       </div>
-      {currentSong && (
-        <AudioPlayer
-          src={currentSong.song_file}
-          isPlaying={true}
-          onEnded={handleAudioEnded}
-        />
-      )}
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function Layout() {
                     <Outlet />
                 </div>
             </div>
-            <AudioPlayer src={src} isPlaying={isPlaying} onEnded={onEnded} />
+            <AudioPlayer src={src} isPlaying={isPlaying} onEnded={onEnded}/>
         </div>
     )
 }

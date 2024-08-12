@@ -3,13 +3,14 @@ import "./SongByAlbum.css";
 import { useParams } from "react-router-dom";
 import { Song } from "../../Songs/Songs";
 import { CardSong } from "../../Songs/CardSong/CardSong";
-import { AudioPlayer } from "../../Songs/AudioPlayer/AudioPlayer";
+// import { AudioPlayer } from "../../Songs/AudioPlayer/AudioPlayer";
 import { useFetch } from "../../../hooks/useFetch";
+import { useAudioPlayer } from "../../../context/audio_player_context";
 
 export function SongsByAlbum() {
   const [page, setPage] = useState(1);
   const [pageSize] = useState(8);
-  const [currentSong, setCurrentSong] = useState<Song | null>(null);
+  const { src, isPlaying, playSong, pauseSong } = useAudioPlayer();
   const { id } = useParams();
 
   const [{ data, isError, isLoading }, doFetch] = useFetch(
@@ -17,17 +18,17 @@ export function SongsByAlbum() {
     {}
   );
 
+  const handleCardClick = (song: Song) => {
+    if (src === song.song_file && isPlaying) {
+      pauseSong();
+    } else {
+      playSong(song.song_file);
+    }
+  };
+
   useEffect(() => {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
-
-  const handleCardClick = (song: Song) => {
-    setCurrentSong(song);
-  };
-
-  const handleAudioEnded = () => {
-    setCurrentSong(null);
-  };
 
 
   if (isLoading) return <p>Cargando...</p>;
@@ -61,13 +62,7 @@ export function SongsByAlbum() {
           </button>
         </div>
       </div>
-      {currentSong && (
-        <AudioPlayer
-          src={currentSong.song_file}
-          isPlaying={true}
-          onEnded={handleAudioEnded}
-        />
-      )}
+      
     </div>
   );
 }

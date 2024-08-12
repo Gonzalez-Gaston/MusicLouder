@@ -1,3 +1,4 @@
+import "./FooterBar.css";
 
 interface AudioPlayerProps {
     src: string;
@@ -14,7 +15,7 @@ export function AudioPlayer({ src, isPlaying, onEnded }: AudioPlayerProps) {
                 controls
                 onEnded={onEnded}
             >
-                Tu navegador no soporta el elemento de audio.
+                {/* Tu navegador no soporta el elemento de audio. */}
             </audio>
         </div>
     );
