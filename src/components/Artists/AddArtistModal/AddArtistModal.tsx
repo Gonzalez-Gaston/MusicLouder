@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
-import "./AddArtistModal.css";
 import { useAuth } from "../../../context/auth_context";
 import { useNavigate } from "react-router-dom";
+import "./AddArtistModal.css";
 
 interface AddArtistModalProps {
   isOpen: boolean;
@@ -13,18 +13,46 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
   const [bio, setBio] = useState("");
   const [image, setImage] = useState("");
   const [website, setWebsite] = useState("");
-  const { isAuthenticated }: any = useAuth("state");
+  const { isAuthenticated, token }: any = useAuth("state");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    onClose();
-  };
+    if (isAuthenticated) {
+      const artistData = {
+        name: name,
+        bio: bio,
+        //image,
+        website: website,
+      };
 
-  if(!isAuthenticated){
-    navigate("/login")
-  } 
+      try {
+        const response = await fetch(
+          "https://sandbox.academiadevelopers.com/harmonyhub/artists/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${token}`,
+            },
+            body: JSON.stringify(artistData),
+          }
+        );
+
+        if (response.ok) {
+          console.log("Artist created successfully");
+          onClose();
+        } else {
+          console.error("Failed to create artist");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } else {
+      navigate("/login");
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -39,11 +67,16 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </label>
           <label>
             Biografía:
-            <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
+            <textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              required
+            />
           </label>
           <label>
             Imagen URL:
@@ -51,6 +84,7 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
               type="text"
               value={image}
               onChange={(e) => setImage(e.target.value)}
+              required
             />
           </label>
           <label>
@@ -59,6 +93,7 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
               type="text"
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
+              required
             />
           </label>
           <button type="submit">Guardar</button>

@@ -11,6 +11,7 @@ export function ArtistCard({ image, name, website, onClick }: ArtistCardProps) {
 
     const handleMenuToggle = (e: React.MouseEvent) => {
         e.stopPropagation(); 
+        e.stopPropagation(); 
         setIsMenuOpen(prevState => !prevState);
     };
 
@@ -21,7 +22,6 @@ export function ArtistCard({ image, name, website, onClick }: ArtistCardProps) {
     };
 
     const handleDelete = () => {
-        // Lógica para eliminar el artista
         console.log('Eliminar artista');
         setIsMenuOpen(false); 
     };

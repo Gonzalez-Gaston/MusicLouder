@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Album } from "../Albums";
 import "./CardAlbum.css";
 
-export function CardAlbum(album: Album) {
+interface CardAlbumProps extends Album {
+    onClick: () => void;
+}
+
+export function CardAlbum({cover, title, year, onClick}: CardAlbumProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuToggle = (e: React.MouseEvent) => {
@@ -26,15 +30,15 @@ export function CardAlbum(album: Album) {
     };
 
     return (
-        <div className="card-album">
+        <div className="card-album"  onClick={onClick}>
             <img
-                src={album.cover == null ? "../public/logo.jpeg" : album.cover}
+                src={cover == null ? "../public/logo.jpeg" : cover}
                 alt=""
                 className="card-album-image"
             />
             <div className="card-album-info">
-                <h2 className="card-album-title">{album.title}</h2>
-                <p className="card-album-year">{album.year}</p>
+                <h2 className="card-album-title">{title}</h2>
+                <p className="card-album-year">{year}</p>
             </div>
             <button className="card-album-menu-button" onClick={handleMenuToggle}>
                 <img

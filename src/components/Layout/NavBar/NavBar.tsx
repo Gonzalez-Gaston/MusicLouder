@@ -8,26 +8,9 @@ export function NavBar() {
     const { isAuthenticated, user}: any = useAuth("state");
     const { logout }: any = useAuth("actions")
 
-    // Realizar la solicitud HTTP cuando el componente se monta
-    // useEffect(() => {
-    //     if (isAuthenticated) {
-    //         doFetch();
-    //     }
-    // }, [isAuthenticated]);
-
     const handleLoginClick = () => {
         navigate("/login");
     };
-
-    // const [{ data, isError, isLoading }, doFetch] = useFetch(
-    //     "https://sandbox.academiadevelopers.com/users/profiles/profile_data/",
-    //     {
-    //         method: "GET",
-    //         headers: {
-    //             Authorization: `Token ${token}`,
-    //         },
-    //     }
-    // );
 
     const handleLogout = () => {
         logout();

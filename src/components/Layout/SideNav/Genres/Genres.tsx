@@ -1,6 +1,7 @@
 import "./Geners.css"
 import { useEffect, useState } from "react";
 import { useFetch } from "../../../../hooks/useFetch";
+import { useNavigate } from "react-router-dom";
 
 export interface Genre {
     id: number;
@@ -12,7 +13,7 @@ export interface Genre {
     updated_at: Date;
 }
 
-export function Genres(){
+export function Genres() {
     const [page] = useState(1);
     const [pageSize] = useState(50);
 
@@ -21,9 +22,15 @@ export function Genres(){
         {}
     );
 
+    const navigate = useNavigate();
+
+    const handleAlbumClick = (id: number) => {
+        navigate(`/songs/genre/${id}`);
+    };
+
     useEffect(() => {
-        doFetch({ page, page_size: pageSize }); 
-    }, [page, pageSize]); 
+        doFetch({ page, page_size: pageSize });
+    }, [page, pageSize]);
 
     console.log(data);
 
@@ -35,7 +42,7 @@ export function Genres(){
         <div className="container-genres">
             {
                 data.results.map((genre: Genre) => (
-                    <div key={genre.id} className="item-genre">
+                    <div key={genre.id} className="item-genre" onClick={() => handleAlbumClick(genre.id)}>
                         {genre.name}
                     </div>
                 ))

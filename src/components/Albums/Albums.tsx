@@ -4,6 +4,7 @@ import { CardAlbum } from "./CardAlbum/CardAlbum";
 import { AddAlbumCard } from "./AddAlbumCard/AddAlbumCard";
 import { AddAlbumModal } from "./AddAlbumCard/AddAlbumModal";
 import "./Albums.css";
+import { useNavigate } from "react-router-dom";
 
 export interface Album {
   id: number;
@@ -28,6 +29,12 @@ export function Albums() {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
 
+  const navigate = useNavigate();
+
+  const handleAlbumClick = (id: number) => {
+    navigate(`/albums/${id}`);
+  };
+
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error al cargar los álbumes.</p>;
   if (!data || !data.results) return <p>No hay álbumes disponibles</p>;
@@ -38,7 +45,7 @@ export function Albums() {
         <div className="cards-container">
           <AddAlbumCard onClick={() => setIsModalOpen(true)} />
           {data.results.map((item: Album) => (
-            <CardAlbum key={item.id} {...item} />
+            <CardAlbum key={item.id} {...item} onClick={() => handleAlbumClick(item.id)}/>
           ))}
         </div>
         <div className="pagination-controls">
