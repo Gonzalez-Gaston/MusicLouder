@@ -22,9 +22,15 @@ export function CardSong({ cover, title, artist, album, owner, onClick }: CardSo
     };
 
     const handleDelete = () => {
-        // Lógica para eliminar la canción
-        console.log('Eliminar canción');
-        setIsMenuOpen(false); 
+        if (window.confirm('¿Estás seguro de que deseas eliminar esta canción?')) {
+            console.log('Eliminar canción');
+            setIsMenuOpen(false); 
+        }
+    };
+
+    const handleAddToPlaylist = () => {
+        console.log('Agregar a la playlist');
+        setIsMenuOpen(false);
     };
 
     return (
@@ -52,8 +58,8 @@ export function CardSong({ cover, title, artist, album, owner, onClick }: CardSo
                                     <img src="public/delete_remove_close_icon_181533.png" alt="Eliminar" className="icon" />
                                     Eliminar
                                 </button>
-                                <button className="artist-card-menu-item" onClick={handleDelete}>                        
-                                    <img src="public\plus_insert_add_new_icon_181537.png" alt="Agregar" className="icon" />
+                                <button className="card-song-menu-item" onClick={handleAddToPlaylist}>                        
+                                    <img src="public/plus_insert_add_new_icon_181537.png" alt="Agregar" className="icon" />
                                     Agregar a la playlist
                                 </button>
                             </div>
