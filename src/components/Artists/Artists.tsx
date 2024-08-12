@@ -20,7 +20,7 @@ export interface Artist {
 
 export function Artists() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(9);
+  const [pageSize] = useState(7); // Mostrar 7 tarjetas por página
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [{ data, isError, isLoading }, doFetch] = useFetch(
@@ -38,28 +38,32 @@ export function Artists() {
 
   return (
     <div className="artists-container">
-      <AddArtistCard onClick={() => setIsModalOpen(true)} />
-      {data.results.map((item: Artist) => (
-        <ArtistCard key={item.id} onClick={() => null} {...item} />
-      ))}
+      <div className="cards-pagination-container">
+        <div className="cards-container">
+          <AddArtistCard onClick={() => setIsModalOpen(true)} />
+          {data.results.map((item: Artist) => (
+            <ArtistCard key={item.id} onClick={() => null} {...item} />
+          ))}
+        </div>
+        <div className="pagination-controls">
+          <button
+            onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
+            disabled={page === 1}
+          >
+            &lt;
+          </button>
+          <button
+            onClick={() => setPage((prevPage) => (data.next ? prevPage + 1 : prevPage))}
+            disabled={!data.next}
+          >
+            &gt;
+          </button>
+        </div>
+      </div>
       <AddArtistModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-      <div className="pagination-controls">
-        <button
-          onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}
-        >
-          Anterior
-        </button>
-        <button
-          onClick={() =>
-            setPage((prevPage) => (data.next ? prevPage + 1 : prevPage))
-          }
-        >
-          Siguiente
-        </button>
-      </div>
     </div>
   );
 }
