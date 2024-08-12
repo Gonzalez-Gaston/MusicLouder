@@ -1,49 +1,67 @@
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useAuth } from "../../../context/auth_context";
 import { useNavigate } from "react-router-dom";
 import "./AddArtistModal.css";
+import { Artist } from "../Artists";
 
 interface AddArtistModalProps {
   isOpen: boolean;
   onClose: () => void;
+  artist?: Artist | null;
 }
 
-export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
+export function AddArtistModal({
+  isOpen,
+  onClose,
+  artist,
+}: AddArtistModalProps) {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [website, setWebsite] = useState("");
   const { isAuthenticated, token }: any = useAuth("state");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (artist) {
+      setName(artist.name);
+      setBio(artist.bio);
+      setWebsite(artist.website);
+      setImage(null);
+    }
+  }, [artist]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (isAuthenticated) {
-      const artistData = {
-        name: name,
-        bio: bio,
-        website: website,
-      };
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("bio", bio);
+      formData.append("website", website);
+      if (image) {
+        formData.append("image", image);
+      }
 
       try {
         const response = await fetch(
-          "https://sandbox.academiadevelopers.com/harmonyhub/artists/",
+          artist
+            ? `https://sandbox.academiadevelopers.com/harmonyhub/artists/${artist.id}/`
+            : "https://sandbox.academiadevelopers.com/harmonyhub/artists/",
           {
-            method: "POST",
+            method: artist ? "PUT" : "POST",
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Token ${token}`,
             },
-            body: JSON.stringify(artistData),
+            body: formData,
           }
         );
 
         if (response.ok) {
-          console.log("Artist created successfully");
+          console.log("Artist saved successfully");
           onClose();
         } else {
-          console.error("Failed to create artist");
+          console.error("Failed to save artist");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -58,7 +76,7 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Añadir Nuevo Artista</h2>
+        <h2>{artist ? "Editar Artista" : "Añadir Nuevo Artista"}</h2>
         <form onSubmit={handleSubmit}>
           <label>
             Nombre:
@@ -78,12 +96,10 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
             />
           </label>
           <label>
-            Imagen URL:
+            Imagen:
             <input
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              required
+              type="file"
+              onChange={(e) => setImage(e.target.files?.[0] || null)}
             />
           </label>
           <label>
@@ -95,7 +111,9 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
               required
             />
           </label>
-          <button type="submit">Guardar</button>
+          <button type="submit">
+            {artist ? "Guardar Cambios" : "Guardar"}
+          </button>
           <button type="button" onClick={onClose}>
             Cancelar
           </button>
