@@ -1,10 +1,12 @@
 import { NavBar } from "./NavBar/NavBar";
 import "./Layout.css";
 import { SideNav } from "./SideNav/SideNav";
-import { FooterBar } from "./FooterBar/FooterBar";
+import { AudioPlayer } from "./FooterBar/FooterBar";
 import { Outlet } from "react-router-dom";
+import { useAudioPlayer } from "../../context/audio_player_context";
 
 export function Layout() {
+    const { src, isPlaying, onEnded } = useAudioPlayer();
     return (
         <div className="layout">
             <NavBar />
@@ -14,7 +16,7 @@ export function Layout() {
                     <Outlet />
                 </div>
             </div>
-            <FooterBar />
+            <AudioPlayer src={src} isPlaying={isPlaying} onEnded={onEnded} />
         </div>
     )
 }

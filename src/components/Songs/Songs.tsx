@@ -4,6 +4,7 @@ import { AudioPlayer } from "./AudioPlayer/AudioPlayer";
 import { SongForm } from "./SongForm/Songform";
 import { useFetch } from "../../hooks/useFetch";
 import "./Songs.css";
+import { useAudioPlayer } from "../../context/audio_player_context";
 
 export interface Song {
   id: number;
@@ -26,6 +27,27 @@ export function Songs() {
   const [pageSize] = useState(7);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { src, isPlaying, playSong, pauseSong, stopSong, onEnded } = useAudioPlayer();
+
+  const handleCardClick = (song: Song) => {
+    if (src === song.song_file && isPlaying) {
+      pauseSong();
+  } else {
+      playSong(song.song_file);
+  }
+  };
+
+  const handleAudioEnded = () => {
+    stopSong();
+  };
+
+  const handleAddSongClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const [{ data, isError, isLoading }, doFetch] = useFetch(
     "https://sandbox.academiadevelopers.com/harmonyhub/songs/",
@@ -36,21 +58,21 @@ export function Songs() {
     doFetch({ page, page_size: pageSize });
   }, [page, pageSize]);
 
-  const handleCardClick = (song: Song) => {
-    setCurrentSong(song);
-  };
+  // const handleCardClick = (song: Song) => {
+  //   setCurrentSong(song);
+  // };
 
-  const handleAudioEnded = () => {
-    setCurrentSong(null);
-  };
+  // const handleAudioEnded = () => {
+  //   setCurrentSong(null);
+  // };
 
-  const handleAddSongClick = () => {
-    setIsModalOpen(true);
-  };
+  // const handleAddSongClick = () => {
+  //   setIsModalOpen(true);
+  // };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   console.log(data);
 

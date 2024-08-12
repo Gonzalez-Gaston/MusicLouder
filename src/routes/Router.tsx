@@ -15,6 +15,7 @@ import { AuthProvider } from "../context/auth_context";
 import ProtectedRoute from "./ProtectedRoutes";
 import { SongsByAlbum } from "../components/Albums/SongByAlbum/SongsByAlbum";
 import { SongGenre } from "../components/Songs/SongGenre/SongGenre";
+import { AudioPlayerProvider } from "../context/audio_player_context";
 
 export const Router = createBrowserRouter(
   [
@@ -32,7 +33,9 @@ export const Router = createBrowserRouter(
     {
       element:
         <AuthProvider>
-          <Layout />
+          <AudioPlayerProvider>
+            <Layout />
+          </AudioPlayerProvider>
         </AuthProvider>,
       children: [
         {
@@ -58,7 +61,7 @@ export const Router = createBrowserRouter(
               element: <SongGenre />,
             },
 
-            ]
+          ]
         },
         {
           path: "/songs/create",

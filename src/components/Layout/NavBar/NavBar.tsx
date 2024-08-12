@@ -27,9 +27,9 @@ export function NavBar() {
                 { text: "Home", url: "/" },
                 { text: "PlayList", url: "/playlist" },
             ]} />
-            <div className="container-input">
+            {/* <div className="container-input">
                 <input type="text" className="input-search" placeholder="Busqueda" />
-            </div>
+            </div> */}
             {
                 isAuthenticated ?
                     <div className="container-user">
