@@ -52,6 +52,10 @@ export function CardSong({ cover, title, artist, album, owner, onClick }: CardSo
                                     <img src="public/delete_remove_close_icon_181533.png" alt="Eliminar" className="icon" />
                                     Eliminar
                                 </button>
+                                <button className="artist-card-menu-item" onClick={handleDelete}>                        
+                                    <img src="public\plus_insert_add_new_icon_181537.png" alt="Agregar" className="icon" />
+                                    Agregar a la playlist
+                                </button>
                             </div>
                         )}
                     </>

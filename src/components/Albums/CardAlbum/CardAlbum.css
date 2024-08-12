@@ -10,6 +10,7 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
     margin: 20px;
     transition: transform 0.3s;
+    position: relative; /* Necesario para posicionar el menú */
 }
 
 .card-album:hover {
@@ -32,13 +33,56 @@
     margin: 3px 0;
 }
 
-.card-album-artist {
+.card-album-year {
     font-size: 0.85em;
     margin: 2px 0;
 }
 
-.card-album-album {
-    font-size: 0.75em;
-    margin: 2px 0;
-    color: #ccc;
+.card-album-menu-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.button-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.card-album-menu {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #000;
+    border: 1px solid #ffd700;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.card-album-menu-item {
+    background: transparent;
+    border: none;
+    color: #ffd700;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.card-album-menu-item:hover {
+    background: #ffd700;
+    color: #010000;
+}
+
+.card-album-menu-item .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
 }

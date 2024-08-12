@@ -23,7 +23,7 @@ export interface Song {
 
 export function Songs() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(8);
+  const [pageSize] = useState(7);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +52,7 @@ export function Songs() {
     setIsModalOpen(false);
   };
 
-  console.log(data)
+  console.log(data);
 
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error al cargar las canciones.</p>;
@@ -60,15 +60,15 @@ export function Songs() {
 
   return (
     <div className="songs-container">
-      <button className="add-song-button" onClick={handleAddSongClick}>
-        <img
-          src="../public/addIcon3.svg"
-          alt="Agregar"
-          className="button-icon"
-        />
-      </button>
       <div className="cards-pagination-container">
         <div className="cards-container">
+          <div className="card add-song-card" onClick={handleAddSongClick}>
+            <img
+              src="../public/addIcon3.svg"
+              alt="Agregar cancion"
+              className="add-song-icon"
+            />
+          </div>
           {data.results.map((item: Song) => (
             <CardSong
               key={item.id}
@@ -106,6 +106,9 @@ export function Songs() {
               ×
             </span>
             <SongForm />
+            <button className="cancel-button" onClick={handleCloseModal}>
+              Cancelar
+            </button>
           </div>
         </div>
       )}

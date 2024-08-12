@@ -22,30 +22,25 @@ html {
   overflow: hidden;
 }
 
-.add-song-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: black;
-  color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.add-song-card {
+  background: #000000;
+  border: 1px solid #ffd700;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s;
-  z-index: 10;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.add-song-button:hover {
+.add-song-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.button-icon {
-  width: 24px;
-  height: 24px;
+.add-song-icon {
+  width: 50px;
+  height: 50px;
 }
 
 .cards-pagination-container {
@@ -100,6 +95,7 @@ html {
   background-color: #000000;
   border-color: #ffd700;
 }
+
 .modal {
   display: flex;
   justify-content: center;
@@ -139,4 +135,21 @@ html {
 .close:hover,
 .close:focus {
   color: #ffd700; /* Color dorado en hover o focus */
+}
+
+.cancel-button {
+  background-color: #ccc; /* Color gris */
+  color: #000; /* Letras negras */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 10px 20px; /* Relleno */
+  cursor: pointer; /* Puntero */
+  font-size: 1em; /* Tamaño de fuente */
+  margin-top: 10px; /* Espacio superior */
+  width: 100%; /* Ancho completo */
+  text-align: center; /* Centrar texto */
+}
+
+.cancel-button:hover {
+  background-color: #bbb; /* Color gris más oscuro en hover */
 }
