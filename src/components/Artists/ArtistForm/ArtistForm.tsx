@@ -23,7 +23,6 @@ export function ArtistForm() {
       formData.append("website", website);
       formData.append("image", image);
 
-      // Aquí iría la lógica para enviar los datos al backend
       console.log("Artist form submitted");
     } else {
       alert("Please fill in all fields");

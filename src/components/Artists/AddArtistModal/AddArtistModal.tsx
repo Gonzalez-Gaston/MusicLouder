@@ -23,7 +23,6 @@ export function AddArtistModal({ isOpen, onClose }: AddArtistModalProps) {
       const artistData = {
         name: name,
         bio: bio,
-        //image,
         website: website,
       };
 
