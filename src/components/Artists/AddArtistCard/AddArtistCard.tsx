@@ -8,7 +8,6 @@ export function AddArtistCard({ onClick }: AddArtistCardProps) {
   return (
     <div className="artist-card add-artist-card" onClick={onClick}>
       <div className="add-artist-icon">
-        {" "}
         <img
           src="../public/addIcon3.svg"
           alt="Agregar"
