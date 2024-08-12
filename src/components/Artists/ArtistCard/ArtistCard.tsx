@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Artist } from "../Artists";
 import "./ArtistCard.css";
+import { useAuth } from "../../../context/auth_context";
 
 interface ArtistCardProps extends Artist {
   onClick: (artist: Artist) => void;
@@ -16,6 +17,7 @@ export function ArtistCard({
   artist
 }: ArtistCardProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, user }: any = useAuth("state");
 
   const handleMenuToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
