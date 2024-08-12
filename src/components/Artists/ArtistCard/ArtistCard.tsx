@@ -13,6 +13,7 @@ export function ArtistCard({
   image,
   name,
   website,
+  owner,
   onClick,
   artist
 }: ArtistCardProps) {
@@ -52,40 +53,48 @@ export function ArtistCard({
           Sitio Web
         </a>
       </div>
-      <button className="artist-card-menu-button" onClick={handleMenuToggle}>
-        <img
-          src="public/1486506267-grid-home-menu-options-squares-table_81451.png"
-          alt="Menú"
-          className="button-icon"
-        />
-      </button>
-      {isMenuOpen && (
-        <div className="artist-card-menu">
-          <button className="artist-card-menu-item" onClick={handleEdit}>
+      {isAuthenticated && owner === user?.user__id && (
+        <>
+          {" "}
+          <button
+            className="artist-card-menu-button"
+            onClick={handleMenuToggle}
+          >
             <img
-              src="public/pen_edit_modify_pencil_icon_181536.png"
-              alt="Editar"
-              className="icon"
+              src="public/1486506267-grid-home-menu-options-squares-table_81451.png"
+              alt="Menú"
+              className="button-icon"
             />
-            Editar
           </button>
-          <button className="artist-card-menu-item" onClick={handleDelete}>
-            <img
-              src="public/delete_remove_close_icon_181533.png"
-              alt="Eliminar"
-              className="icon"
-            />
-            Eliminar
-          </button>
-          <button className="artist-card-menu-item" onClick={handleDelete}>
-            <img
-              src="public/plus_insert_add_new_icon_181537.png"
-              alt="Agregar"
-              className="icon"
-            />
-            Agregar a la playlist
-          </button>
-        </div>
+          {isMenuOpen && (
+            <div className="artist-card-menu">
+              <button className="artist-card-menu-item" onClick={handleEdit}>
+                <img
+                  src="public/pen_edit_modify_pencil_icon_181536.png"
+                  alt="Editar"
+                  className="icon"
+                />
+                Editar
+              </button>
+              <button className="artist-card-menu-item" onClick={handleDelete}>
+                <img
+                  src="public/delete_remove_close_icon_181533.png"
+                  alt="Eliminar"
+                  className="icon"
+                />
+                Eliminar
+              </button>
+              <button className="artist-card-menu-item" onClick={handleDelete}>
+                <img
+                  src="public/plus_insert_add_new_icon_181537.png"
+                  alt="Agregar"
+                  className="icon"
+                />
+                Agregar a la playlist
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
