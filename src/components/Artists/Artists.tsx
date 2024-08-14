@@ -22,7 +22,7 @@ export interface Artist {
 
 export function Artists() {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(7); // Mostrar 7 tarjetas por página
+  const [pageSize] = useState(7);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
   const { isAuthenticated }: any = useAuth("state");

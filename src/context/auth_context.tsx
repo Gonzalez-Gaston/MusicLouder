@@ -5,7 +5,6 @@ interface User {
   id: number;
   name: string;
   email: string;
-  // otros campos que puedas necesitar
 }
 
 interface AuthState {
@@ -65,13 +64,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Efecto para verificar si existe un token en localStorage al cargar la aplicación
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
       dispatch({ type: ACTIONS.LOGIN, payload: { token } });
 
-      // Intenta cargar los datos del usuario
       (async () => {
         try {
           const response = await fetch(

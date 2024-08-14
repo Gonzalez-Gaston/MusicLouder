@@ -6,14 +6,8 @@ export function SongForm() {
     const [title, setTitle] = useState('');
     const [year, setArtist] = useState('');
     const [album, setAlbum] = useState('');
-    const { isAuthenticated, token }: any = useAuth("state");
-    // const [songFile, setSongFile] = useState<File | null>(null);
+    const { token }: any = useAuth("state");
 
-    // const handleSongFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     if (e.target.files && e.target.files[0]) {
-    //         setSongFile(e.target.files[0]);
-    //     }
-    // };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,7 +17,7 @@ export function SongForm() {
             formData.append('title', title);
             formData.append('artist', year);
             formData.append('album', album);
-            // formData.append('songFile', songFile);
+
 
             try {
                 const response = await fetch(
@@ -39,7 +33,7 @@ export function SongForm() {
 
                 if (response.ok) {
                     console.log("Song saved successfully");
-                    //   onClose();
+
                 } else {
                     console.error("Failed to save song");
                 }
@@ -65,10 +59,7 @@ export function SongForm() {
                 Álbum:
                 <input type="text" value={album} onChange={(e) => setAlbum(e.target.value)} required />
             </label>
-            {/* <label>
-                Archivo de Canción:
-                <input type="file" accept="audio/*" onChange={handleSongFileChange} required />
-            </label> */}
+            {}
             <button type="submit">Crear Canción</button>
         </form>
     );

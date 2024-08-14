@@ -38,7 +38,6 @@ export function useFetch(url: string, options = {}) {
     function doFetch(queryParams: Record<string, any> = {}) {
         dispatch({ type: ACTIONS.FETCH_INIT });
 
-        // Construir la URL con los parámetros de consulta
         const queryString = new URLSearchParams(queryParams).toString();
         const fullUrl = queryString ? `${url}?${queryString}` : url;
 

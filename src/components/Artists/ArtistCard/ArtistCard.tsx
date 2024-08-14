@@ -46,7 +46,6 @@ export function ArtistCard({
 
         if (response.ok) {
           console.log("Song saved successfully");
-          //   onClose();
         } else {
           console.error("Failed to save song");
         }
